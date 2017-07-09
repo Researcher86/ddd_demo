@@ -6,7 +6,7 @@ import java.util.Objects;
  * Объект значение, телефон сотрудника.
  *
  * @author Tanat
- * @version 1.0
+ * @version 1.1
  * @since 07.07.2017.
  */
 public class Phone {
@@ -22,10 +22,6 @@ public class Phone {
         this.country = country;
         this.code = code;
         this.number = number;
-    }
-
-    public String getFull() {
-        return '+' + country + " (" + code + ") " + number;
     }
 
     public int getCountry() {
@@ -58,5 +54,10 @@ public class Phone {
         result = 31 * result + (code != null ? code.hashCode() : 0);
         result = 31 * result + (number != null ? number.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "+" + country + " (" + code + ") " + number;
     }
 }

@@ -1,5 +1,6 @@
 package kz.tanat.domain.employee;
 
+import kz.tanat.domain.EventTracking;
 import kz.tanat.domain.employee.event.EmployeePhoneAdded;
 import kz.tanat.domain.employee.event.EmployeePhoneRemoved;
 import org.junit.Before;
@@ -15,7 +16,7 @@ import static org.junit.Assert.*;
  * Тестируем логику работы телефонных номеров сотрудников.
  *
  * @author Tanat
- * @version 1.0
+ * @version 1.1
  * @since 07.07.2017.
  */
 public class PhoneTest {

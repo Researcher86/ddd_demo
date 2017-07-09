@@ -7,7 +7,7 @@ import java.util.Objects;
  * Статус сотрудника в системе.
  *
  * @author Tanat
- * @version 1.0
+ * @version 1.1
  * @since 07.07.2017.
  */
 public class Status {
@@ -41,5 +41,23 @@ public class Status {
 
     public LocalDate getDate() {
         return date;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Status status = (Status) o;
+
+        if (value != status.value) return false;
+        return date != null ? date.equals(status.date) : status.date == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = value != null ? value.hashCode() : 0;
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        return result;
     }
 }

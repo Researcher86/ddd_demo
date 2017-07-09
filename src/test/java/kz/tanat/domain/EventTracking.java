@@ -1,8 +1,4 @@
-package kz.tanat.domain.employee;
-
-import kz.tanat.domain.DomainEvent;
-import kz.tanat.domain.DomainEventPublisher;
-import kz.tanat.domain.DomainEventSubscriber;
+package kz.tanat.domain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,17 +8,19 @@ import java.util.List;
  * Помогает фиксировать и тестировать события, произошедшие в системе.
  *
  * @author Tanat
- * @version 1.0
+ * @version 1.1
  * @since 07.07.2017.
  */
 public class EventTracking {
     private List<Class<? extends DomainEvent>> handledEvents = new ArrayList<>();
+    private List<DomainEvent> events = new ArrayList<>();
 
     public EventTracking() {
         DomainEventPublisher.instance().subscribe(new DomainEventSubscriber<DomainEvent>() {
             @Override
             public void handleEvent(DomainEvent aDomainEvent) {
                 handledEvents.add(aDomainEvent.getClass());
+                events.add(aDomainEvent);
             }
 
             @Override
@@ -40,10 +38,13 @@ public class EventTracking {
     }
 
     public void expectedLastEvent(Class<? extends DomainEvent> aDomainEventType) {
-        Class<? extends DomainEvent> lastEvent = this.handledEvents.get(this.handledEvents.size() - 1);
-        if (lastEvent != aDomainEventType) {
-            throw new IllegalStateException("Expected last " + aDomainEventType.getSimpleName() + " event, but handled event: " + lastEvent.getSimpleName());
+        if (this.handledEvents.get(this.handledEvents.size() - 1) != aDomainEventType) {
+            throw new IllegalStateException("Expected last " + aDomainEventType.getSimpleName() + " event, but handled event: " + this.handledEvents.get(this.handledEvents.size() - 1).getSimpleName());
         }
+    }
+
+    public DomainEvent getLastEvent() {
+        return this.events.get(this.events.size() - 1);
     }
 
     public void expectedEvent(Class<? extends DomainEvent> aDomainEventType) {

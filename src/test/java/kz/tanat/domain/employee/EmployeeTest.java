@@ -1,6 +1,7 @@
 package kz.tanat.domain.employee;
 
 import kz.tanat.domain.DomainException;
+import kz.tanat.domain.EventTracking;
 import kz.tanat.domain.employee.event.*;
 import org.junit.Before;
 import org.junit.Rule;
@@ -16,7 +17,7 @@ import static org.junit.Assert.*;
  * Тестируем логику работы агрегата/сущности сотрудников.
  *
  * @author Tanat
- * @version 1.0
+ * @version 1.1
  * @since 07.07.2017.
  */
 public class EmployeeTest {
@@ -25,10 +26,10 @@ public class EmployeeTest {
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
 
-    EmployeeId id = new EmployeeId(25L);
-    Name name = new Name("Пупкин", "Василий", "Петрович");
-    Address address = new Address("Россия", "Липецкая обл.", "г. Пушкин", "ул. Ленина", "25");
-    Phones phones = new Phones(Arrays.asList(
+    private EmployeeId id = new EmployeeId(25L);
+    private Name name = new Name("Пупкин", "Василий", "Петрович");
+    private Address address = new Address("Россия", "Липецкая обл.", "г. Пушкин", "ул. Ленина", "25");
+    private Phones phones = new Phones(Arrays.asList(
             new Phone(7, "920", "00000001"),
             new Phone(7, "910", "00000002")
     ));

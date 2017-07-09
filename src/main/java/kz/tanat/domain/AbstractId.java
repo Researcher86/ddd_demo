@@ -4,7 +4,7 @@ package kz.tanat.domain;
  * Базовый класс идентификации сущностей в системе.
  *
  * @author Tanat
- * @version 1.0
+ * @version 1.1
  * @since 07.07.2017.
  */
 public abstract class AbstractId {
@@ -31,5 +31,10 @@ public abstract class AbstractId {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return id.toString();
     }
 }
