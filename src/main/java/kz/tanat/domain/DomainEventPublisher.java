@@ -24,13 +24,13 @@ public class DomainEventPublisher {
         return instance.get();
     }
 
-    public <T> void publish(final T aDomainEvent) {
+    public <T> void publish(final T domainEvent) {
         if (!this.isPublishing() && this.hasSubscribers()) {
 
             try {
                 this.setPublishing(true);
 
-                Class<?> eventType = aDomainEvent.getClass();
+                Class<?> eventType = domainEvent.getClass();
 
                 @SuppressWarnings("unchecked")
                 List<DomainEventSubscriber<T>> allSubscribers = this.subscribers();
@@ -39,7 +39,7 @@ public class DomainEventPublisher {
                     Class<?> subscribedToType = subscriber.subscribedToEventType();
 
                     if (eventType == subscribedToType || subscribedToType == DomainEvent.class) {
-                        subscriber.handleEvent(aDomainEvent);
+                        subscriber.handleEvent(domainEvent);
                     }
                 }
 
@@ -49,8 +49,8 @@ public class DomainEventPublisher {
         }
     }
 
-    public void publishAll(Collection<DomainEvent> aDomainEvents) {
-        for (DomainEvent domainEvent : aDomainEvents) {
+    public void publishAll(Collection<DomainEvent> domainEvents) {
+        for (DomainEvent domainEvent : domainEvents) {
             this.publish(domainEvent);
         }
     }
@@ -62,11 +62,11 @@ public class DomainEventPublisher {
     }
 
     @SuppressWarnings("unchecked")
-    public <T> void subscribe(DomainEventSubscriber<T> aSubscriber) {
+    public <T> void subscribe(DomainEventSubscriber<T> subscriber) {
         if (!this.isPublishing()) {
             this.ensureSubscribersList();
 
-            this.subscribers().add(aSubscriber);
+            this.subscribers().add(subscriber);
         }
     }
 
@@ -88,8 +88,8 @@ public class DomainEventPublisher {
         return this.publishing;
     }
 
-    private void setPublishing(boolean aFlag) {
-        this.publishing = aFlag;
+    private void setPublishing(boolean flag) {
+        this.publishing = flag;
     }
 
     private boolean hasSubscribers() {
@@ -102,7 +102,7 @@ public class DomainEventPublisher {
     }
 
     @SuppressWarnings("rawtypes")
-    private void setSubscribers(List aSubscriberList) {
-        this.subscribers = aSubscriberList;
+    private void setSubscribers(List subscriberList) {
+        this.subscribers = subscriberList;
     }
 }

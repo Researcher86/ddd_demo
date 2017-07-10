@@ -1,5 +1,7 @@
 package kz.tanat.domain;
 
+import java.util.UUID;
+
 /**
  * Базовый класс идентификации сущностей в системе.
  *
@@ -8,13 +10,13 @@ package kz.tanat.domain;
  * @since 07.07.2017.
  */
 public abstract class AbstractId {
-    private Long id;
+    private UUID id;
 
-    public AbstractId(Long id) {
+    public AbstractId(UUID id) {
         this.id = id;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 

@@ -18,9 +18,9 @@ public class EventTracking {
     public EventTracking() {
         DomainEventPublisher.instance().subscribe(new DomainEventSubscriber<DomainEvent>() {
             @Override
-            public void handleEvent(DomainEvent aDomainEvent) {
-                handledEvents.add(aDomainEvent.getClass());
-                events.add(aDomainEvent);
+            public void handleEvent(DomainEvent domainEvent) {
+                handledEvents.add(domainEvent.getClass());
+                events.add(domainEvent);
             }
 
             @Override

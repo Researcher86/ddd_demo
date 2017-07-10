@@ -1,9 +1,9 @@
-package kz.tanat.app;
+package kz.tanat.app.employee;
 
-import kz.tanat.app.dto.AddressDto;
-import kz.tanat.app.dto.EmployeeDto;
-import kz.tanat.app.dto.NameDto;
-import kz.tanat.app.dto.PhoneDto;
+import kz.tanat.app.employee.dto.AddressDto;
+import kz.tanat.app.employee.dto.EmployeeDto;
+import kz.tanat.app.employee.dto.NameDto;
+import kz.tanat.app.employee.dto.PhoneDto;
 
 import java.time.LocalDate;
 

@@ -22,9 +22,9 @@ public class DomainEventPublisherTest {
 
         DomainEventPublisher.instance().subscribe(new DomainEventSubscriber<TestableDomainEvent>() {
             @Override
-            public void handleEvent(TestableDomainEvent aDomainEvent) {
-                assertEquals(100L, aDomainEvent.getId());
-                assertEquals("test", aDomainEvent.getName());
+            public void handleEvent(TestableDomainEvent domainEvent) {
+                assertEquals(100L, domainEvent.getId());
+                assertEquals("test", domainEvent.getName());
                 eventHandled = true;
             }
 
@@ -47,9 +47,9 @@ public class DomainEventPublisherTest {
 
         DomainEventPublisher.instance().subscribe(new DomainEventSubscriber<TestableDomainEvent>() {
             @Override
-            public void handleEvent(TestableDomainEvent aDomainEvent) {
-                assertEquals(100L, aDomainEvent.getId());
-                assertEquals("test", aDomainEvent.getName());
+            public void handleEvent(TestableDomainEvent domainEvent) {
+                assertEquals(100L, domainEvent.getId());
+                assertEquals("test", domainEvent.getName());
                 eventHandled = true;
                 // attempt nested publish, which should not work
                 DomainEventPublisher.instance().publish(new AnotherTestableDomainEvent(1000.0));
@@ -63,9 +63,9 @@ public class DomainEventPublisherTest {
 
         DomainEventPublisher.instance().subscribe(new DomainEventSubscriber<AnotherTestableDomainEvent>() {
             @Override
-            public void handleEvent(AnotherTestableDomainEvent aDomainEvent) {
+            public void handleEvent(AnotherTestableDomainEvent domainEvent) {
                 // should never be reached due to blocked publisher
-                assertEquals(1000.0, aDomainEvent.getValue(), 0.001);
+                assertEquals(1000.0, domainEvent.getValue(), 0.001);
                 anotherEventHandled = true;
             }
 

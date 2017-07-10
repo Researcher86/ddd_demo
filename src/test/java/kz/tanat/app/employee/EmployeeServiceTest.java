@@ -1,9 +1,9 @@
-package kz.tanat.app;
+package kz.tanat.app.employee;
 
-import kz.tanat.app.dto.AddressDto;
-import kz.tanat.app.dto.EmployeeDto;
-import kz.tanat.app.dto.NameDto;
-import kz.tanat.app.dto.PhoneDto;
+import kz.tanat.app.employee.dto.AddressDto;
+import kz.tanat.app.employee.dto.EmployeeDto;
+import kz.tanat.app.employee.dto.NameDto;
+import kz.tanat.app.employee.dto.PhoneDto;
 import kz.tanat.domain.EventTracking;
 import kz.tanat.domain.employee.event.EmployeeArchived;
 import kz.tanat.domain.employee.event.EmployeeReinstated;
@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
@@ -37,7 +38,7 @@ public class EmployeeServiceTest {
 
     private EmployeeService service;
 
-    private String id = "1";
+    private String id = new UUID(0L, 1L).toString();
     private NameDto name = new NameDto("Пупкин", "Василий", "Петрович");
     private AddressDto address = new AddressDto("Россия", "Липецкая обл.", "г. Пушкин", "ул. Ленина", "25");
     private List<PhoneDto> phones = new ArrayList<>(Arrays.asList(

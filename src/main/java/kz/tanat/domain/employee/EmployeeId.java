@@ -2,6 +2,8 @@ package kz.tanat.domain.employee;
 
 import kz.tanat.domain.AbstractId;
 
+import java.util.UUID;
+
 /**
  * Объект значение, идентификатор сотрудника.
  *
@@ -10,7 +12,7 @@ import kz.tanat.domain.AbstractId;
  * @since 07.07.2017.
  */
 public class EmployeeId extends AbstractId {
-    public EmployeeId(Long id) {
+    public EmployeeId(UUID id) {
         super(id);
     }
 }

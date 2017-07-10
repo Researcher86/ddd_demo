@@ -6,6 +6,7 @@ import kz.tanat.domain.employee.EmployeeRepository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -45,6 +46,6 @@ public class MemoryEmployeeRepository implements EmployeeRepository {
 
     @Override
     public EmployeeId nextId() {
-        return new EmployeeId(identity.getAndAdd(1));
+        return new EmployeeId(new UUID(0L, identity.getAndAdd(1)));
     }
 }

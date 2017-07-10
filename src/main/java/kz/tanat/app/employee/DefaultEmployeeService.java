@@ -1,9 +1,9 @@
-package kz.tanat.app;
+package kz.tanat.app.employee;
 
-import kz.tanat.app.dto.AddressDto;
-import kz.tanat.app.dto.EmployeeDto;
-import kz.tanat.app.dto.NameDto;
-import kz.tanat.app.dto.PhoneDto;
+import kz.tanat.app.employee.dto.AddressDto;
+import kz.tanat.app.employee.dto.EmployeeDto;
+import kz.tanat.app.employee.dto.NameDto;
+import kz.tanat.app.employee.dto.PhoneDto;
 import kz.tanat.domain.DomainEvent;
 import kz.tanat.domain.DomainEventPublisher;
 import kz.tanat.domain.DomainEventSubscriber;
@@ -11,6 +11,7 @@ import kz.tanat.domain.employee.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -29,8 +30,8 @@ public class DefaultEmployeeService implements EmployeeService {
 
         DomainEventPublisher.instance().subscribe(new DomainEventSubscriber<DomainEvent>() {
             @Override
-            public void handleEvent(DomainEvent aDomainEvent) {
-                log.info("Event: {}", aDomainEvent.getClass().getSimpleName());
+            public void handleEvent(DomainEvent domainEvent) {
+                log.info("Event: {}", domainEvent.getClass().getSimpleName());
             }
 
             @Override
@@ -42,7 +43,7 @@ public class DefaultEmployeeService implements EmployeeService {
 
     @Override
     public EmployeeDto get(String employeeId) {
-        Employee employee = employeeRepository.get(new EmployeeId(Long.parseLong(employeeId)));
+        Employee employee = employeeRepository.get(new EmployeeId(UUID.fromString(employeeId)));
         return new EmployeeDto(
                 new NameDto(
                         employee.getName().getLast(),
@@ -97,7 +98,7 @@ public class DefaultEmployeeService implements EmployeeService {
 
     @Override
     public void rename(String employeeId, NameDto dto) {
-        Employee employee = employeeRepository.get(new EmployeeId(Long.parseLong(employeeId)));
+        Employee employee = employeeRepository.get(new EmployeeId(UUID.fromString(employeeId)));
         employee.rename(new Name(
                 dto.getLast(),
                 dto.getFirst(),
@@ -109,7 +110,7 @@ public class DefaultEmployeeService implements EmployeeService {
 
     @Override
     public void changeAddress(String employeeId, AddressDto dto) {
-        Employee employee = employeeRepository.get(new EmployeeId(Long.parseLong(employeeId)));
+        Employee employee = employeeRepository.get(new EmployeeId(UUID.fromString(employeeId)));
         employee.changeAddress(new Address(
                 dto.getCountry(),
                 dto.getRegion(),
@@ -123,7 +124,7 @@ public class DefaultEmployeeService implements EmployeeService {
 
     @Override
     public void addPhone(String employeeId, PhoneDto dto) {
-        Employee employee = employeeRepository.get(new EmployeeId(Long.parseLong(employeeId)));
+        Employee employee = employeeRepository.get(new EmployeeId(UUID.fromString(employeeId)));
         employee.addPhone(new Phone(
                 dto.getCountry(),
                 dto.getCode(),
@@ -135,28 +136,28 @@ public class DefaultEmployeeService implements EmployeeService {
 
     @Override
     public void removePhone(String employeeId, int index) {
-        Employee employee = employeeRepository.get(new EmployeeId(Long.parseLong(employeeId)));
+        Employee employee = employeeRepository.get(new EmployeeId(UUID.fromString(employeeId)));
         employee.removePhone(index);
         employeeRepository.save(employee);
     }
 
     @Override
     public void archive(String employeeId, LocalDate date) {
-        Employee employee = employeeRepository.get(new EmployeeId(Long.parseLong(employeeId)));
+        Employee employee = employeeRepository.get(new EmployeeId(UUID.fromString(employeeId)));
         employee.archive(date);
         employeeRepository.save(employee);
     }
 
     @Override
     public void reinstate(String employeeId, LocalDate date) {
-        Employee employee = employeeRepository.get(new EmployeeId(Long.parseLong(employeeId)));
+        Employee employee = employeeRepository.get(new EmployeeId(UUID.fromString(employeeId)));
         employee.reinstate(date);
         employeeRepository.save(employee);
     }
 
     @Override
     public void remove(String employeeId) {
-        Employee employee = employeeRepository.get(new EmployeeId(Long.parseLong(employeeId)));
+        Employee employee = employeeRepository.get(new EmployeeId(UUID.fromString(employeeId)));
         employee.remove();
         employeeRepository.remove(employee);
     }

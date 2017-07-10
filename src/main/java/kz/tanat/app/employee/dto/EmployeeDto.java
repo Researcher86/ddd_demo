@@ -1,4 +1,4 @@
-package kz.tanat.app.dto;
+package kz.tanat.app.employee.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

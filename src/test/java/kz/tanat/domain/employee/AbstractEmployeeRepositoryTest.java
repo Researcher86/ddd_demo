@@ -6,6 +6,7 @@ import org.junit.rules.ExpectedException;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
@@ -32,13 +33,6 @@ public abstract class AbstractEmployeeRepositoryTest {
 
         assertNotNull(found);
         assertEquals(employee.getId(), found.getId());
-    }
-
-    @Test
-    public void getNotFound() throws Exception {
-        expectedEx.expect(IllegalArgumentException.class);
-        expectedEx.expectMessage("Employee not found.");
-        repository.get(new EmployeeId(25L));
     }
 
     @Test
@@ -85,19 +79,19 @@ public abstract class AbstractEmployeeRepositoryTest {
 
     @Test
     public void remove() throws Exception {
-        Employee employee = EmployeeBuilder.instance().withId(5L).build();
+        Employee employee = EmployeeBuilder.instance().withId(new UUID(0L, 5L)).build();
         this.repository.add(employee);
         this.repository.remove(employee);
 
         expectedEx.expect(IllegalArgumentException.class);
         expectedEx.expectMessage("Employee not found.");
 
-        this.repository.get(new EmployeeId(5L));
+        this.repository.get(new EmployeeId(new UUID(0L, 5L)));
     }
 
     @Test
     public void nextId() throws Exception {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1000; i++) {
             System.out.println(repository.nextId());
         }
     }

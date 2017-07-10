@@ -10,6 +10,7 @@ import org.junit.rules.ExpectedException;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.UUID;
 
 import static org.junit.Assert.*;
 
@@ -26,7 +27,7 @@ public class EmployeeTest {
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
 
-    private EmployeeId id = new EmployeeId(25L);
+    private EmployeeId id = new EmployeeId(UUID.randomUUID());
     private Name name = new Name("Пупкин", "Василий", "Петрович");
     private Address address = new Address("Россия", "Липецкая обл.", "г. Пушкин", "ул. Ленина", "25");
     private Phones phones = new Phones(Arrays.asList(

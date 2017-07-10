@@ -2,6 +2,7 @@ package kz.tanat.domain.employee;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.UUID;
 
 /**
  * Билдер для создания тестового сотрудника.
@@ -11,7 +12,7 @@ import java.util.Arrays;
  * @since 07.07.2017.
  */
 public class EmployeeBuilder {
-    private Long id = 1L;
+    private UUID id = new UUID(0L, 1L);
     private Phones phones;
     private boolean archived = false;
 
@@ -23,7 +24,7 @@ public class EmployeeBuilder {
         return new EmployeeBuilder();
     }
 
-    public EmployeeBuilder withId(Long id) {
+    public EmployeeBuilder withId(UUID id) {
         this.id = id;
         return this;
     }
