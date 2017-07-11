@@ -1,10 +1,9 @@
 package kz.tanat.domain.employee;
 
+import kz.tanat.domain.AbstractEntity;
 import kz.tanat.domain.DomainEventPublisher;
 import kz.tanat.domain.DomainException;
 import kz.tanat.domain.employee.event.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -20,7 +19,7 @@ import java.util.List;
  * @since 07.07.2017.
  */
 @Entity
-public class Employee {
+public class Employee extends AbstractEntity {
     @EmbeddedId
     private EmployeeId id;
     @Embedded
