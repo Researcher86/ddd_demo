@@ -7,18 +7,19 @@ import kz.tanat.app.employee.dto.PhoneDto;
 import kz.tanat.domain.DomainEvent;
 import kz.tanat.domain.DomainEventPublisher;
 import kz.tanat.domain.DomainEventSubscriber;
-import kz.tanat.domain.employee.*;
+import kz.tanat.domain.employee.Employee;
+import kz.tanat.domain.employee.EmployeeId;
+import kz.tanat.domain.employee.EmployeeRepository;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 /**
  * Реализация сервиса по работе с агрегатом/сущностью сотрудник.
  *
  * @author Tanat
- * @version 1.0
+ * @version 1.1
  * @since 09.07.2017.
  */
 @Slf4j
@@ -43,122 +44,66 @@ public class DefaultEmployeeService implements EmployeeService {
 
     @Override
     public EmployeeDto get(String employeeId) {
-        Employee employee = employeeRepository.get(new EmployeeId(UUID.fromString(employeeId)));
-        return new EmployeeDto(
-                new NameDto(
-                        employee.getName().getLast(),
-                        employee.getName().getFirst(),
-                        employee.getName().getMiddle()
-                ),
-                new AddressDto(
-                        employee.getAddress().getCountry(),
-                        employee.getAddress().getRegion(),
-                        employee.getAddress().getCity(),
-                        employee.getAddress().getStreet(),
-                        employee.getAddress().getHouse()
-                ),
-                employee.getPhones().getAll().stream()
-                        .map(phone -> new PhoneDto(
-                                phone.getCountry(),
-                                phone.getCode(),
-                                phone.getNumber()))
-                        .collect(Collectors.toList())
-        );
+        Employee employee = employeeRepository.getOne(new EmployeeId(UUID.fromString(employeeId)));
+        return new EmployeeDto(employee);
     }
 
     @Override
     public void create(EmployeeDto dto) {
-        Employee employee = new Employee(
-                employeeRepository.nextId(),
-                new Name(
-                        dto.getName().getLast(),
-                        dto.getName().getFirst(),
-                        dto.getName().getMiddle()
-                ),
-                new Address(
-                        dto.getAddress().getCountry(),
-                        dto.getAddress().getRegion(),
-                        dto.getAddress().getCity(),
-                        dto.getAddress().getStreet(),
-                        dto.getAddress().getHouse()
-                ),
-                new Phones(
-                        dto.getPhones()
-                                .stream()
-                                .map(phone -> new Phone(
-                                        phone.getCountry(),
-                                        phone.getCode(),
-                                        phone.getNumber()))
-                                .collect(Collectors.toList())
-                )
-        );
+        Employee employee = dto.createEmployee(employeeRepository.nextId());
 
-        employeeRepository.add(employee);
+        employeeRepository.save(employee);
     }
 
     @Override
     public void rename(String employeeId, NameDto dto) {
-        Employee employee = employeeRepository.get(new EmployeeId(UUID.fromString(employeeId)));
-        employee.rename(new Name(
-                dto.getLast(),
-                dto.getFirst(),
-                dto.getMiddle()
-        ));
+        Employee employee = employeeRepository.getOne(new EmployeeId(UUID.fromString(employeeId)));
+        employee.rename(dto.createName());
 
         employeeRepository.save(employee);
     }
 
     @Override
     public void changeAddress(String employeeId, AddressDto dto) {
-        Employee employee = employeeRepository.get(new EmployeeId(UUID.fromString(employeeId)));
-        employee.changeAddress(new Address(
-                dto.getCountry(),
-                dto.getRegion(),
-                dto.getCity(),
-                dto.getStreet(),
-                dto.getHouse()
-        ));
+        Employee employee = employeeRepository.getOne(new EmployeeId(UUID.fromString(employeeId)));
+        employee.changeAddress(dto.createAddress());
 
         employeeRepository.save(employee);
     }
 
     @Override
     public void addPhone(String employeeId, PhoneDto dto) {
-        Employee employee = employeeRepository.get(new EmployeeId(UUID.fromString(employeeId)));
-        employee.addPhone(new Phone(
-                dto.getCountry(),
-                dto.getCode(),
-                dto.getNumber()
-        ));
+        Employee employee = employeeRepository.getOne(new EmployeeId(UUID.fromString(employeeId)));
+        employee.addPhone(dto.createPhone());
 
         employeeRepository.save(employee);
     }
 
     @Override
     public void removePhone(String employeeId, int index) {
-        Employee employee = employeeRepository.get(new EmployeeId(UUID.fromString(employeeId)));
+        Employee employee = employeeRepository.getOne(new EmployeeId(UUID.fromString(employeeId)));
         employee.removePhone(index);
         employeeRepository.save(employee);
     }
 
     @Override
     public void archive(String employeeId, LocalDate date) {
-        Employee employee = employeeRepository.get(new EmployeeId(UUID.fromString(employeeId)));
+        Employee employee = employeeRepository.getOne(new EmployeeId(UUID.fromString(employeeId)));
         employee.archive(date);
         employeeRepository.save(employee);
     }
 
     @Override
     public void reinstate(String employeeId, LocalDate date) {
-        Employee employee = employeeRepository.get(new EmployeeId(UUID.fromString(employeeId)));
+        Employee employee = employeeRepository.getOne(new EmployeeId(UUID.fromString(employeeId)));
         employee.reinstate(date);
         employeeRepository.save(employee);
     }
 
     @Override
     public void remove(String employeeId) {
-        Employee employee = employeeRepository.get(new EmployeeId(UUID.fromString(employeeId)));
+        Employee employee = employeeRepository.getOne(new EmployeeId(UUID.fromString(employeeId)));
         employee.remove();
-        employeeRepository.remove(employee);
+        employeeRepository.delete(employee);
     }
 }
