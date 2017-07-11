@@ -19,7 +19,7 @@ import java.util.UUID;
  * Реализация сервиса по работе с агрегатом/сущностью сотрудник.
  *
  * @author Tanat
- * @version 1.1
+ * @version 1.2
  * @since 09.07.2017.
  */
 @Slf4j
@@ -44,7 +44,7 @@ public class DefaultEmployeeService implements EmployeeService {
 
     @Override
     public EmployeeDto get(String employeeId) {
-        Employee employee = employeeRepository.getOne(new EmployeeId(UUID.fromString(employeeId)));
+        Employee employee = getOne(employeeId);
         return new EmployeeDto(employee);
     }
 
@@ -57,7 +57,7 @@ public class DefaultEmployeeService implements EmployeeService {
 
     @Override
     public void rename(String employeeId, NameDto dto) {
-        Employee employee = employeeRepository.getOne(new EmployeeId(UUID.fromString(employeeId)));
+        Employee employee = getOne(employeeId);
         employee.rename(dto.createName());
 
         employeeRepository.save(employee);
@@ -65,7 +65,7 @@ public class DefaultEmployeeService implements EmployeeService {
 
     @Override
     public void changeAddress(String employeeId, AddressDto dto) {
-        Employee employee = employeeRepository.getOne(new EmployeeId(UUID.fromString(employeeId)));
+        Employee employee = getOne(employeeId);
         employee.changeAddress(dto.createAddress());
 
         employeeRepository.save(employee);
@@ -73,7 +73,7 @@ public class DefaultEmployeeService implements EmployeeService {
 
     @Override
     public void addPhone(String employeeId, PhoneDto dto) {
-        Employee employee = employeeRepository.getOne(new EmployeeId(UUID.fromString(employeeId)));
+        Employee employee = getOne(employeeId);
         employee.addPhone(dto.createPhone());
 
         employeeRepository.save(employee);
@@ -81,29 +81,39 @@ public class DefaultEmployeeService implements EmployeeService {
 
     @Override
     public void removePhone(String employeeId, int index) {
-        Employee employee = employeeRepository.getOne(new EmployeeId(UUID.fromString(employeeId)));
+        Employee employee = getOne(employeeId);
         employee.removePhone(index);
         employeeRepository.save(employee);
     }
 
     @Override
     public void archive(String employeeId, LocalDate date) {
-        Employee employee = employeeRepository.getOne(new EmployeeId(UUID.fromString(employeeId)));
+        Employee employee = getOne(employeeId);
         employee.archive(date);
         employeeRepository.save(employee);
     }
 
     @Override
     public void reinstate(String employeeId, LocalDate date) {
-        Employee employee = employeeRepository.getOne(new EmployeeId(UUID.fromString(employeeId)));
+        Employee employee = getOne(employeeId);
         employee.reinstate(date);
         employeeRepository.save(employee);
     }
 
     @Override
     public void remove(String employeeId) {
-        Employee employee = employeeRepository.getOne(new EmployeeId(UUID.fromString(employeeId)));
+        Employee employee = getOne(employeeId);
         employee.remove();
         employeeRepository.delete(employee);
+    }
+
+    private Employee getOne(String employeeId) {
+        Employee employee = employeeRepository.findOne(new EmployeeId(UUID.fromString(employeeId)));
+
+        if (employee == null) {
+            throw new IllegalArgumentException("Employee not found.");
+        }
+
+        return employee;
     }
 }

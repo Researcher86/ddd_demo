@@ -5,6 +5,7 @@ import kz.tanat.app.employee.dto.EmployeeDto;
 import kz.tanat.app.employee.dto.NameDto;
 import kz.tanat.app.employee.dto.PhoneDto;
 import kz.tanat.domain.EventTracking;
+import kz.tanat.domain.employee.EmployeeId;
 import kz.tanat.domain.employee.EmployeeRepository;
 import kz.tanat.domain.employee.event.EmployeeArchived;
 import kz.tanat.domain.employee.event.EmployeeReinstated;
@@ -13,9 +14,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -26,28 +26,31 @@ import java.util.UUID;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyObject;
 
 /**
  * Тестирование сервиса по работе с агрегатом/сущностью сотрудник.
  *
  * @author Tanat
- * @version 1.2
+ * @version 1.3
  * @since 08.07.2017.
  */
-@RunWith(SpringRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class EmployeeServiceTest {
     private EventTracking eventTracking;
 
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
 
-    @MockBean
+    @Mock
     private EmployeeRepository employeeRepository;
 
-    @Autowired
     private EmployeeService service;
 
-    private String id = new UUID(0L, 1L).toString();
+    private String stringId = new UUID(0L, 1L).toString();
+    private UUID uuidId = new UUID(0L, 1L);
     private NameDto name = new NameDto("Пупкин", "Василий", "Петрович");
     private AddressDto address = new AddressDto("Россия", "Липецкая обл.", "г. Пушкин", "ул. Ленина", "25");
     private List<PhoneDto> phones = new ArrayList<>(Arrays.asList(
@@ -63,8 +66,8 @@ public class EmployeeServiceTest {
 
     @Before
     public void setUp() throws Exception {
-//        DomainEventPublisher.instance().reset();
-//        service = new DefaultEmployeeService(new MemoryEmployeeRepository());
+        given(employeeRepository.findOne(new EmployeeId(uuidId))).willReturn(createDto.createEmployee(new EmployeeId(uuidId)));
+        service = new DefaultEmployeeService(employeeRepository);
         eventTracking = new EventTracking();
     }
 
@@ -72,7 +75,7 @@ public class EmployeeServiceTest {
     public void create() throws Exception {
         service.create(createDto);
 
-        EmployeeDto found = service.get(id);
+        EmployeeDto found = service.get(stringId);
         assertEquals(createDto.getName(), found.getName());
         assertEquals(createDto.getAddress(), found.getAddress());
         assertThat(createDto.getPhones(), is(found.getPhones()));
@@ -83,9 +86,9 @@ public class EmployeeServiceTest {
         NameDto nameDto = new NameDto("Test", "Test", "Test");
 
         service.create(createDto);
-        service.rename(id, nameDto);
+        service.rename(stringId, nameDto);
 
-        EmployeeDto found = service.get(id);
+        EmployeeDto found = service.get(stringId);
         assertEquals(nameDto, found.getName());
     }
 
@@ -94,9 +97,9 @@ public class EmployeeServiceTest {
         AddressDto addressDto = new AddressDto("Test", "Test", "Test", "Test", "Test");
 
         service.create(createDto);
-        service.changeAddress(id, addressDto);
+        service.changeAddress(stringId, addressDto);
 
-        EmployeeDto found = service.get(id);
+        EmployeeDto found = service.get(stringId);
         assertEquals(addressDto, found.getAddress());
     }
 
@@ -105,10 +108,10 @@ public class EmployeeServiceTest {
         PhoneDto phoneDto = new PhoneDto(7, "777", "000005");
 
         service.create(createDto);
-        service.addPhone(id, phoneDto);
+        service.addPhone(stringId, phoneDto);
         phones.add(phoneDto);
 
-        EmployeeDto found = service.get(id);
+        EmployeeDto found = service.get(stringId);
         assertThat(phones, is(found.getPhones()));
     }
 
@@ -116,9 +119,9 @@ public class EmployeeServiceTest {
     public void removePhone() throws Exception {
         service.create(createDto);
 
-        service.removePhone(id, 1);
+        service.removePhone(stringId, 1);
 
-        EmployeeDto found = service.get(id);
+        EmployeeDto found = service.get(stringId);
         assertEquals(1, found.getPhones().size());
     }
 
@@ -127,11 +130,11 @@ public class EmployeeServiceTest {
         LocalDate date = LocalDate.of(2017, 7, 9);
         service.create(createDto);
 
-        service.archive(id, date);
+        service.archive(stringId, date);
 
         eventTracking.expectedLastEvent(EmployeeArchived.class);
         EmployeeArchived lastEvent = (EmployeeArchived) eventTracking.getLastEvent();
-        assertEquals(id, lastEvent.getId().toString());
+        assertEquals(stringId, lastEvent.getId().toString());
         assertEquals(date, lastEvent.getDate());
     }
 
@@ -140,12 +143,12 @@ public class EmployeeServiceTest {
         LocalDate date = LocalDate.of(2017, 7, 9);
         service.create(createDto);
 
-        service.archive(id, date);
-        service.reinstate(id, date);
+        service.archive(stringId, date);
+        service.reinstate(stringId, date);
 
         eventTracking.expectedLastEvent(EmployeeReinstated.class);
         EmployeeReinstated lastEvent = (EmployeeReinstated) eventTracking.getLastEvent();
-        assertEquals(id, lastEvent.getId().toString());
+        assertEquals(stringId, lastEvent.getId().toString());
         assertEquals(date, lastEvent.getDate());
     }
 
@@ -153,12 +156,14 @@ public class EmployeeServiceTest {
     public void remove() throws Exception {
         service.create(createDto);
 
-        service.archive(id, LocalDate.of(2017, 7, 9));
-        service.remove(id);
+        service.archive(stringId, LocalDate.of(2017, 7, 9));
+        service.remove(stringId);
+
+        given(employeeRepository.findOne(new EmployeeId(uuidId))).willReturn(null);
 
         expectedEx.expect(IllegalArgumentException.class);
         expectedEx.expectMessage("Employee not found.");
-        service.get(id);
+        service.get(stringId);
     }
 
 }
