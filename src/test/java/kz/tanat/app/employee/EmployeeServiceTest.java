@@ -32,7 +32,7 @@ import static org.mockito.BDDMockito.given;
  * Тестирование сервиса по работе с агрегатом/сущностью сотрудник.
  *
  * @author Tanat
- * @version 1.4
+ * @version 1.5
  * @since 08.07.2017.
  */
 @RunWith(MockitoJUnitRunner.class)
@@ -56,15 +56,11 @@ public class EmployeeServiceTest {
             new PhoneDto(7, "910", "00000002")
     ));
 
-    private EmployeeDto createDto = new EmployeeDto() {{
-        setName(name);
-        setAddress(address);
-        setPhones(phones);
-    }};
+    private EmployeeDto createDto = new EmployeeDto(stringId, name, address, phones);
 
     @Before
     public void setUp() throws Exception {
-        given(employeeRepository.findOne(new EmployeeId(uuidId))).willReturn(createDto.createEmployee(new EmployeeId(uuidId)));
+        given(employeeRepository.findOne(new EmployeeId(uuidId))).willReturn(createDto.create(new EmployeeId(uuidId)));
         service = new DefaultEmployeeService(employeeRepository);
         eventTracking = new EventTracking();
     }
@@ -74,6 +70,7 @@ public class EmployeeServiceTest {
         service.create(createDto);
 
         EmployeeDto found = service.get(stringId);
+        assertEquals(createDto.getId(), found.getId());
         assertEquals(createDto.getName(), found.getName());
         assertEquals(createDto.getAddress(), found.getAddress());
         assertThat(createDto.getPhones(), is(found.getPhones()));
