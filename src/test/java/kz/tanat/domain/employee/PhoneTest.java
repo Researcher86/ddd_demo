@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
  * Тестируем логику работы телефонных номеров сотрудников.
  *
  * @author Tanat
- * @version 1.1
+ * @version 1.2
  * @since 07.07.2017.
  */
 public class PhoneTest {
@@ -35,7 +35,7 @@ public class PhoneTest {
         Employee employee = EmployeeBuilder.instance().build();
         Phone phone = new Phone(7, "888", "00000001");
         employee.addPhone(phone);
-        assertFalse(employee.getPhones().getAll().isEmpty());
+        assertFalse(employee.getPhones().isEmpty());
         assertTrue(employee.containsPhone(phone));
 
         eventTracking.expectedLastEvent(EmployeePhoneAdded.class);
@@ -45,7 +45,7 @@ public class PhoneTest {
     public void addExists() {
         Phone phone = new Phone(7, "888", "00000001");
         Employee employee = EmployeeBuilder.instance()
-                .withPhones(new Phones(Arrays.asList(phone)))
+                .withPhones(Arrays.asList(phone))
                 .build();
 
         expectedEx.expectMessage("Phone already exists.");
@@ -56,15 +56,15 @@ public class PhoneTest {
     @Test
     public void remove() {
         Employee employee = EmployeeBuilder.instance()
-                .withPhones(new Phones(Arrays.asList(
+                .withPhones(Arrays.asList(
                         new Phone(7, "888", "00000001"),
-                        new Phone(7, "888", "00000002"))))
+                        new Phone(7, "888", "00000002")))
                 .build();
-        assertEquals(2, employee.getPhones().getAll().size());
+        assertEquals(2, employee.getPhones().size());
 
         employee.removePhone(1);
 
-        assertEquals(1, employee.getPhones().getAll().size());
+        assertEquals(1, employee.getPhones().size());
         eventTracking.expectedLastEvent(EmployeePhoneRemoved.class);
     }
 
@@ -78,7 +78,7 @@ public class PhoneTest {
     @Test
     public void removeLast() {
         Employee employee = EmployeeBuilder.instance()
-                .withPhones(new Phones(Arrays.asList(new Phone(7, "888", "00000001"))))
+                .withPhones(Arrays.asList(new Phone(7, "888", "00000001")))
                 .build();
         expectedEx.expectMessage("Cannot remove the last phone.");
         employee.removePhone(0);

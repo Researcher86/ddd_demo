@@ -13,11 +13,11 @@ import java.util.List;
  * Класс для работы со список телефонов сотрудника.
  *
  * @author Tanat
- * @version 1.1
+ * @version 1.2
  * @since 07.07.2017.
  */
 @Embeddable
-public class Phones {
+class Phones {
     @ElementCollection(fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Phone> phones = new ArrayList<>();
@@ -25,7 +25,7 @@ public class Phones {
     private Phones() {
     }
 
-    public Phones(List<Phone> phones) {
+    Phones(List<Phone> phones) {
         if (phones == null || phones.isEmpty()) {
             throw new DomainException("Employee must contain at least one phone.");
         }
@@ -33,7 +33,7 @@ public class Phones {
         phones.forEach(this::add);
     }
 
-    public void add(Phone phone) {
+    void add(Phone phone) {
         if (phones.stream().anyMatch(p -> p.equals(phone))) {
             throw new DomainException("Phone already exists.");
         }
@@ -41,7 +41,7 @@ public class Phones {
         phones.add(phone);
     }
 
-    public Phone remove(int index) {
+    Phone remove(int index) {
         if (index > phones.size()) {
             throw new DomainException("Phone not found.");
         }
@@ -53,11 +53,11 @@ public class Phones {
         return phones.remove(index);
     }
 
-    public boolean contains(Phone phone) {
+    boolean contains(Phone phone) {
         return this.phones.contains(phone);
     }
 
-    public List<Phone> getAll() {
+    List<Phone> getAll() {
         return Collections.unmodifiableList(phones);
     }
 }

@@ -2,22 +2,23 @@ package kz.tanat.domain.employee;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 /**
  * Билдер для создания тестового сотрудника.
  *
  * @author Tanat
- * @version 1.0
+ * @version 1.1
  * @since 07.07.2017.
  */
 public class EmployeeBuilder {
     private UUID id = new UUID(0L, 1L);
-    private Phones phones;
+    private List<Phone> phones;
     private boolean archived = false;
 
     private EmployeeBuilder() {
-        phones = new Phones(Arrays.asList(new Phone(7, "000", "00000000")));
+        phones = Arrays.asList(new Phone(7, "000", "00000000"));
     }
 
     public static EmployeeBuilder instance() {
@@ -29,7 +30,7 @@ public class EmployeeBuilder {
         return this;
     }
 
-    public EmployeeBuilder withPhones(Phones phones) {
+    public EmployeeBuilder withPhones(List<Phone> phones) {
         this.phones = phones;
         return this;
     }

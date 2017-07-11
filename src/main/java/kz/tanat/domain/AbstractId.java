@@ -10,7 +10,7 @@ import java.util.UUID;
  * Базовый класс идентификации сущностей в системе.
  *
  * @author Tanat
- * @version 1.2
+ * @version 1.3
  * @since 07.07.2017.
  */
 @MappedSuperclass
@@ -22,10 +22,6 @@ public abstract class AbstractId implements Serializable {
 
     protected AbstractId(UUID id) {
         this.id = id;
-    }
-
-    public UUID getId() {
-        return id;
     }
 
     @Override

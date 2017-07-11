@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
  * Тест хранилища данных об сотрудниках.
  *
  * @author Tanat
- * @version 1.1
+ * @version 1.2
  * @since 09.07.2017.
  */
 @RunWith(SpringRunner.class)
@@ -47,9 +47,9 @@ public class EmployeeRepositoryTest {
     @Test
     public void add() throws Exception {
         Employee employee = EmployeeBuilder.instance()
-                .withPhones(new Phones(Arrays.asList(
+                .withPhones(Arrays.asList(
                         new Phone(7, "888", "00000001"),
-                        new Phone(7, "888", "00000002"))))
+                        new Phone(7, "888", "00000002")))
                 .build();
         repository.save(employee);
 
@@ -59,16 +59,16 @@ public class EmployeeRepositoryTest {
         assertEquals(employee.getName(), found.getName());
         assertEquals(employee.getAddress(), found.getAddress());
         assertEquals(employee.getCreateDate(), found.getCreateDate());
-        assertThat(employee.getPhones().getAll(), containsInAnyOrder(found.getPhones().getAll().toArray()));
+        assertThat(employee.getPhones(), containsInAnyOrder(found.getPhones().toArray()));
         assertThat(employee.getStatus(), containsInAnyOrder(found.getStatus().toArray()));
     }
 
     @Test
     public void save() throws Exception {
         Employee employee = EmployeeBuilder.instance()
-                .withPhones(new Phones(Arrays.asList(
+                .withPhones(Arrays.asList(
                         new Phone(7, "888", "00000001"),
-                        new Phone(7, "888", "00000002"))))
+                        new Phone(7, "888", "00000002")))
                 .build();
         repository.save(employee);
 
@@ -82,7 +82,7 @@ public class EmployeeRepositoryTest {
         Employee found = repository.getOne(employee.getId());
         assertTrue(found.isArchived());
         assertEquals(edit.getName(), found.getName());
-        assertThat(edit.getPhones().getAll(), containsInAnyOrder(found.getPhones().getAll().toArray()));
+        assertThat(edit.getPhones(), containsInAnyOrder(found.getPhones().toArray()));
         assertThat(edit.getStatus(), containsInAnyOrder(found.getStatus().toArray()));
     }
 

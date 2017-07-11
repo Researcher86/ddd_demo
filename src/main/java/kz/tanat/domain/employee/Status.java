@@ -1,6 +1,8 @@
 package kz.tanat.domain.employee;
 
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -8,7 +10,7 @@ import java.util.Objects;
  * Статус сотрудника в системе.
  *
  * @author Tanat
- * @version 1.2
+ * @version 1.3
  * @since 07.07.2017.
  */
 @Embeddable
@@ -18,6 +20,7 @@ public class Status {
         ARCHIVED
     }
 
+    @Enumerated(EnumType.STRING)
     private State value;
     private LocalDate date;
 

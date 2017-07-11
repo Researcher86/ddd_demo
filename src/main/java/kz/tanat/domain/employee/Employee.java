@@ -16,7 +16,7 @@ import java.util.List;
  * Агрегат (Сущность) сотрудник.
  *
  * @author Tanat
- * @version 1.1
+ * @version 1.2
  * @since 07.07.2017.
  */
 @Entity
@@ -37,11 +37,11 @@ public class Employee {
     private Employee() {
     }
 
-    public Employee(EmployeeId id, Name name, Address address, Phones phones) {
+    public Employee(EmployeeId id, Name name, Address address, List<Phone> phones) {
         this.id = id;
         this.name = name;
         this.address = address;
-        this.phones = phones;
+        this.phones = new Phones(phones);
         this.createDate = LocalDate.now();
         this.status.add(new Status(Status.State.ACTIVE, createDate));
 
@@ -122,8 +122,8 @@ public class Employee {
         return address;
     }
 
-    public Phones getPhones() {
-        return phones;
+    public List<Phone> getPhones() {
+        return phones.getAll();
     }
 
     public LocalDate getCreateDate() {

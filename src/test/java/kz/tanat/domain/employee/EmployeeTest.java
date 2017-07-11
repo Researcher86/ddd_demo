@@ -10,6 +10,7 @@ import org.junit.rules.ExpectedException;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
@@ -18,7 +19,7 @@ import static org.junit.Assert.*;
  * Тестируем логику работы агрегата/сущности сотрудников.
  *
  * @author Tanat
- * @version 1.1
+ * @version 1.2
  * @since 07.07.2017.
  */
 public class EmployeeTest {
@@ -30,10 +31,10 @@ public class EmployeeTest {
     private EmployeeId id = new EmployeeId(UUID.randomUUID());
     private Name name = new Name("Пупкин", "Василий", "Петрович");
     private Address address = new Address("Россия", "Липецкая обл.", "г. Пушкин", "ул. Ленина", "25");
-    private Phones phones = new Phones(Arrays.asList(
+    private List<Phone> phones = Arrays.asList(
             new Phone(7, "920", "00000001"),
             new Phone(7, "910", "00000002")
-    ));
+    );
 
     @Before
     public void setUp() throws Exception {
@@ -60,18 +61,16 @@ public class EmployeeTest {
     @Test
     public void createWithoutPhones() throws Exception {
         expectedEx.expectMessage("Employee must contain at least one phone.");
-        new Employee(id, name, address, new Phones(Arrays.asList()));
+        new Employee(id, name, address, Arrays.asList());
     }
 
     @Test
     public void createWithSamePhoneNumbers() throws Exception {
         expectedEx.expectMessage("Phone already exists.");
-        new Employee(id, name, address, new Phones(
-                Arrays.asList(
-                        new Phone(7, "920", "00000001"),
-                        new Phone(7, "920", "00000001")
-                ))
-        );
+        new Employee(id, name, address, Arrays.asList(
+                new Phone(7, "920", "00000001"),
+                new Phone(7, "920", "00000001")
+        ));
     }
 
     @Test
