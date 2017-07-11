@@ -1,7 +1,5 @@
 package kz.tanat.domain;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.util.UUID;
@@ -10,7 +8,7 @@ import java.util.UUID;
  * Базовый класс идентификации сущностей в системе.
  *
  * @author Tanat
- * @version 1.3
+ * @version 1.4
  * @since 07.07.2017.
  */
 @MappedSuperclass

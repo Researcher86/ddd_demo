@@ -27,14 +27,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyObject;
 
 /**
  * Тестирование сервиса по работе с агрегатом/сущностью сотрудник.
  *
  * @author Tanat
- * @version 1.3
+ * @version 1.4
  * @since 08.07.2017.
  */
 @RunWith(MockitoJUnitRunner.class)

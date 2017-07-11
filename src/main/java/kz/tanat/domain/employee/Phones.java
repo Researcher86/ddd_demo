@@ -4,7 +4,9 @@ import kz.tanat.domain.DomainException;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
+import javax.persistence.FetchType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.List;
  * Класс для работы со список телефонов сотрудника.
  *
  * @author Tanat
- * @version 1.2
+ * @version 1.3
  * @since 07.07.2017.
  */
 @Embeddable
