@@ -1,18 +1,23 @@
 package kz.tanat.domain.employee;
 
+import javax.persistence.Embeddable;
 import java.util.Objects;
 
 /**
  * Объект значение, телефон сотрудника.
  *
  * @author Tanat
- * @version 1.1
+ * @version 1.2
  * @since 07.07.2017.
  */
+@Embeddable
 public class Phone {
     private int country;
     private String code;
     private String number;
+
+    private Phone() {
+    }
 
     public Phone(int country, String code, String number) {
         Objects.nonNull(country);

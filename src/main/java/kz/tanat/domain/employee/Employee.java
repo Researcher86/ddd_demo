@@ -3,7 +3,10 @@ package kz.tanat.domain.employee;
 import kz.tanat.domain.DomainEventPublisher;
 import kz.tanat.domain.DomainException;
 import kz.tanat.domain.employee.event.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,16 +16,26 @@ import java.util.List;
  * Агрегат (Сущность) сотрудник.
  *
  * @author Tanat
- * @version 1.0
+ * @version 1.1
  * @since 07.07.2017.
  */
+@Entity
 public class Employee {
+    @EmbeddedId
     private EmployeeId id;
+    @Embedded
     private Name name;
+    @Embedded
     private Address address;
+    @Embedded
     private Phones phones;
     private LocalDate createDate;
+
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<Status> status = new ArrayList<>();
+
+    private Employee() {
+    }
 
     public Employee(EmployeeId id, Name name, Address address, Phones phones) {
         this.id = id;

@@ -1,5 +1,6 @@
 package kz.tanat.domain.employee;
 
+import javax.persistence.Embeddable;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -7,9 +8,10 @@ import java.util.Objects;
  * Статус сотрудника в системе.
  *
  * @author Tanat
- * @version 1.1
+ * @version 1.2
  * @since 07.07.2017.
  */
+@Embeddable
 public class Status {
     public enum State {
         ACTIVE,
@@ -18,6 +20,9 @@ public class Status {
 
     private State value;
     private LocalDate date;
+
+    private Status() {
+    }
 
     public Status(State value, LocalDate date) {
         Objects.nonNull(value);
@@ -59,5 +64,13 @@ public class Status {
         int result = value != null ? value.hashCode() : 0;
         result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Status{" +
+                "value=" + value +
+                ", date=" + date +
+                '}';
     }
 }

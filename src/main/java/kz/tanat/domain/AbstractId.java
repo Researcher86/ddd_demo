@@ -1,18 +1,26 @@
 package kz.tanat.domain;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
 import java.util.UUID;
 
 /**
  * Базовый класс идентификации сущностей в системе.
  *
  * @author Tanat
- * @version 1.1
+ * @version 1.2
  * @since 07.07.2017.
  */
-public abstract class AbstractId {
+@MappedSuperclass
+public abstract class AbstractId implements Serializable {
     private UUID id;
 
-    public AbstractId(UUID id) {
+    protected AbstractId() {
+    }
+
+    protected AbstractId(UUID id) {
         this.id = id;
     }
 

@@ -1,7 +1,10 @@
 package kz.tanat.domain.employee;
 
 import kz.tanat.domain.DomainException;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,11 +13,17 @@ import java.util.List;
  * Класс для работы со список телефонов сотрудника.
  *
  * @author Tanat
- * @version 1.0
+ * @version 1.1
  * @since 07.07.2017.
  */
+@Embeddable
 public class Phones {
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Phone> phones = new ArrayList<>();
+
+    private Phones() {
+    }
 
     public Phones(List<Phone> phones) {
         if (phones == null || phones.isEmpty()) {

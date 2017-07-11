@@ -5,13 +5,17 @@ import kz.tanat.app.employee.dto.EmployeeDto;
 import kz.tanat.app.employee.dto.NameDto;
 import kz.tanat.app.employee.dto.PhoneDto;
 import kz.tanat.domain.EventTracking;
+import kz.tanat.domain.employee.EmployeeRepository;
 import kz.tanat.domain.employee.event.EmployeeArchived;
 import kz.tanat.domain.employee.event.EmployeeReinstated;
-import kz.tanat.infrastructure.persistence.MemoryEmployeeRepository;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,15 +31,20 @@ import static org.junit.Assert.assertThat;
  * Тестирование сервиса по работе с агрегатом/сущностью сотрудник.
  *
  * @author Tanat
- * @version 1.1
+ * @version 1.2
  * @since 08.07.2017.
  */
+@RunWith(SpringRunner.class)
 public class EmployeeServiceTest {
     private EventTracking eventTracking;
 
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
 
+    @MockBean
+    private EmployeeRepository employeeRepository;
+
+    @Autowired
     private EmployeeService service;
 
     private String id = new UUID(0L, 1L).toString();
@@ -55,7 +64,7 @@ public class EmployeeServiceTest {
     @Before
     public void setUp() throws Exception {
 //        DomainEventPublisher.instance().reset();
-        service = new DefaultEmployeeService(new MemoryEmployeeRepository());
+//        service = new DefaultEmployeeService(new MemoryEmployeeRepository());
         eventTracking = new EventTracking();
     }
 
