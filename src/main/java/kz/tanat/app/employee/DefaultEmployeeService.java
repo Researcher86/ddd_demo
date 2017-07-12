@@ -19,7 +19,7 @@ import java.util.UUID;
  * Реализация сервиса по работе с агрегатом/сущностью сотрудник.
  *
  * @author Tanat
- * @version 1.3
+ * @version 1.4
  * @since 09.07.2017.
  */
 @Slf4j
@@ -50,7 +50,7 @@ public class DefaultEmployeeService implements EmployeeService {
 
     @Override
     public void create(EmployeeDto dto) {
-        Employee employee = dto.create(employeeRepository.nextId());
+        Employee employee = dto.createEmployee(employeeRepository.nextId());
 
         employeeRepository.save(employee);
     }

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * Объект хранит информацию об сотруднике для добавления в систему.
  *
  * @author Tanat
- * @version 1.3
+ * @version 1.4
  * @since 09.07.2017.
  */
 @Data
@@ -32,7 +32,7 @@ public class EmployeeDto {
         this.phones = employee.getPhones().stream().map(PhoneDto::new).collect(Collectors.toList());
     }
 
-    public Employee create(EmployeeId employeeId) {
+    public Employee createEmployee(EmployeeId employeeId) {
         return new Employee(
                 employeeId,
                 name.createName(),

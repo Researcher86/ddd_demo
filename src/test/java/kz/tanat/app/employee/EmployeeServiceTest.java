@@ -32,7 +32,7 @@ import static org.mockito.BDDMockito.given;
  * Тестирование сервиса по работе с агрегатом/сущностью сотрудник.
  *
  * @author Tanat
- * @version 1.5
+ * @version 1.6
  * @since 08.07.2017.
  */
 @RunWith(MockitoJUnitRunner.class)
@@ -60,7 +60,7 @@ public class EmployeeServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        given(employeeRepository.findOne(new EmployeeId(uuidId))).willReturn(createDto.create(new EmployeeId(uuidId)));
+        given(employeeRepository.findOne(new EmployeeId(uuidId))).willReturn(createDto.createEmployee(new EmployeeId(uuidId)));
         service = new DefaultEmployeeService(employeeRepository);
         eventTracking = new EventTracking();
     }
