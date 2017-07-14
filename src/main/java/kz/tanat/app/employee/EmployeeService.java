@@ -6,6 +6,7 @@ import kz.tanat.app.employee.dto.NameDto;
 import kz.tanat.app.employee.dto.PhoneDto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Интерфейс сервиса для реализации логики по работе с агрегатом/сущностью сотрудник.
@@ -16,6 +17,8 @@ import java.time.LocalDate;
  */
 public interface EmployeeService {
     EmployeeDto get(String employeeId);
+
+    List<EmployeeDto> getAll();
 
     void create(EmployeeDto dto);
 

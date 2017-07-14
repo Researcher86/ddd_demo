@@ -11,9 +11,12 @@ import kz.tanat.domain.employee.Employee;
 import kz.tanat.domain.employee.EmployeeId;
 import kz.tanat.domain.employee.EmployeeRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * Реализация сервиса по работе с агрегатом/сущностью сотрудник.
@@ -23,6 +26,7 @@ import java.util.UUID;
  * @since 09.07.2017.
  */
 @Slf4j
+@Service
 public class DefaultEmployeeService implements EmployeeService {
     private final EmployeeRepository employeeRepository;
 
@@ -46,6 +50,13 @@ public class DefaultEmployeeService implements EmployeeService {
     public EmployeeDto get(String employeeId) {
         Employee employee = getOne(employeeId);
         return new EmployeeDto(employee);
+    }
+
+    @Override
+    public List<EmployeeDto> getAll() {
+        return employeeRepository.findAll().stream()
+                .map(EmployeeDto::new)
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Employees</title>
+</head>
+<body>
+<table>
+    <tr th:each="employee, iter : ${employees}">
+        <td>Name: <span th:text="${iter.index + 1}"></span></td>
+        <td th:text="${employee.name}"></td>
+        <td th:text="${employee.address}"></td>
+        <td th:text="${employee.phones}"></td>
+    </tr>
+</table>
+</body>
+</html>
