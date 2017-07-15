@@ -29,13 +29,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
 
 /**
  * Тестирование сервиса по работе с агрегатом/сущностью сотрудник.
  *
  * @author Tanat
- * @version 1.7
+ * @version 1.8
  * @since 08.07.2017.
  */
 @RunWith(MockitoJUnitRunner.class)
@@ -56,8 +55,8 @@ public class EmployeeServiceTest {
 
     private EmployeeService service;
 
-    private String stringId = new UUID(0L, 1L).toString();
     private UUID uuidId = new UUID(0L, 1L);
+    private String stringId = uuidId.toString();
     private NameDto name = new NameDto("Пупкин", "Василий", "Петрович");
     private AddressDto address = new AddressDto("Россия", "Липецкая обл.", "г. Пушкин", "ул. Ленина", "25");
     private List<PhoneDto> phones = new ArrayList<>(Arrays.asList(
@@ -70,7 +69,7 @@ public class EmployeeServiceTest {
     @Before
     public void setUp() throws Exception {
         DomainEventPublisher.instance().reset();
-        when(employeeRepository.findOne(new EmployeeId(uuidId))).thenReturn(createDto.createEmployee(new EmployeeId(uuidId)));
+        given(employeeRepository.findOne(new EmployeeId(uuidId))).willReturn(createDto.createEmployee(new EmployeeId(uuidId)));
 //        when(eventStore.save(any(StoredEvent.class))).thenReturn(storedEvent);
 //        given(eventStore.save(any(StoredEvent.class))).willReturn(storedEvent);
 

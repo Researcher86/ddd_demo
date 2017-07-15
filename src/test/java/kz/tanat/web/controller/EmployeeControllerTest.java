@@ -6,7 +6,6 @@ import kz.tanat.app.employee.dto.EmployeeDto;
 import kz.tanat.domain.employee.EmployeeBuilder;
 import kz.tanat.domain.employee.EmployeeRepository;
 import kz.tanat.domain.event.EventRepository;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Arrays;
 import java.util.UUID;
 
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -28,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Тестируем реализацию Web контроллера.
  *
  * @author Tanat
- * @version 1.1
+ * @version 1.2
  * @since 15.07.2017.
  */
 @RunWith(SpringRunner.class)
@@ -48,7 +47,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void list() throws Exception {
-        when(employeeService.getAll()).thenReturn(Arrays.asList(new EmployeeDto(EmployeeBuilder.instance().build())));
+        given(employeeService.getAll()).willReturn(Arrays.asList(new EmployeeDto(EmployeeBuilder.instance().build())));
         mockMvc.perform(get("/employees"))
                 .andDo(print())
                 .andExpect(
@@ -58,7 +57,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void showSuccess() throws Exception {
-        when(employeeService.get(any())).thenReturn(new EmployeeDto(EmployeeBuilder.instance().build()));
+        given(employeeService.get(any())).willReturn(new EmployeeDto(EmployeeBuilder.instance().build()));
         mockMvc.perform(get("/employees/{id}", UUID.randomUUID()))
                 .andDo(print())
                 .andExpect(
@@ -68,7 +67,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void showNotFound() throws Exception {
-        when(employeeService.get(any())).thenThrow(new IllegalArgumentException("Employee not found."));
+        given(employeeService.get(any())).willThrow(new IllegalArgumentException("Employee not found."));
         mockMvc.perform(get("/employees/{id}", UUID.randomUUID()))
                 .andDo(print())
                 .andExpect(
