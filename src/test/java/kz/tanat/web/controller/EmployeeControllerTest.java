@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Тестируем реализацию Web контроллера.
  *
  * @author Tanat
- * @version 1.0
+ * @version 1.1
  * @since 15.07.2017.
  */
 @RunWith(SpringRunner.class)
@@ -46,14 +46,9 @@ public class EmployeeControllerTest {
 
     private ObjectMapper mapper = new ObjectMapper();
 
-    @Before
-    public void setUp() throws Exception {
-        when(employeeService.getAll()).thenReturn(Arrays.asList(new EmployeeDto(EmployeeBuilder.instance().build())));
-        when(employeeService.get(any())).thenReturn(new EmployeeDto(EmployeeBuilder.instance().build()));
-    }
-
     @Test
     public void list() throws Exception {
+        when(employeeService.getAll()).thenReturn(Arrays.asList(new EmployeeDto(EmployeeBuilder.instance().build())));
         mockMvc.perform(get("/employees"))
                 .andDo(print())
                 .andExpect(
@@ -62,11 +57,22 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    public void show() throws Exception {
+    public void showSuccess() throws Exception {
+        when(employeeService.get(any())).thenReturn(new EmployeeDto(EmployeeBuilder.instance().build()));
         mockMvc.perform(get("/employees/{id}", UUID.randomUUID()))
                 .andDo(print())
                 .andExpect(
                         status().isOk()
+                );
+    }
+
+    @Test
+    public void showNotFound() throws Exception {
+        when(employeeService.get(any())).thenThrow(new IllegalArgumentException("Employee not found."));
+        mockMvc.perform(get("/employees/{id}", UUID.randomUUID()))
+                .andDo(print())
+                .andExpect(
+                        status().isNotFound()
                 );
     }
 
