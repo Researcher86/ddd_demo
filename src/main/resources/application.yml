@@ -1,0 +1,15 @@
+spring:
+    profiles: dev
+    h2: #H2 url jdbc:h2:mem:testdb
+      console:
+        enabled: true
+
+server:
+    port: 8080
+
+---
+
+spring:
+    profiles: prod
+server:
+    port: 8080

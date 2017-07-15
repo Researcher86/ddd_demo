@@ -1,10 +1,8 @@
 package kz.tanat;
 
-import kz.tanat.app.employee.dto.AddressDto;
-import kz.tanat.app.employee.dto.EmployeeDto;
-import kz.tanat.app.employee.dto.NameDto;
-import kz.tanat.app.employee.dto.PhoneDto;
+import kz.tanat.domain.DomainEvent;
 import kz.tanat.domain.employee.*;
+import kz.tanat.domain.event.EventRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -19,7 +17,7 @@ import java.util.UUID;
  * Класс для запуска системы.
  *
  * @author Tanat
- * @version 1.0
+ * @version 1.1
  * @since 07.07.2017.
  */
 @Slf4j
@@ -31,6 +29,9 @@ public class Application {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private EventRepository eventRepository;
 
     @Bean
     CommandLineRunner runner() {
@@ -56,6 +57,11 @@ public class Application {
                     new Address("Россия", "Липецкая обл.", "г. Пушкин", "ул. Ленина", "25"),
                     Arrays.asList(new Phone(7, "000", "00000000"))
             ));
+
+            eventRepository.findAll().forEach(storedEvent -> {
+                DomainEvent domainEvent = storedEvent.toDomainEvent();
+                System.out.println(domainEvent);
+            });
         };
     }
 

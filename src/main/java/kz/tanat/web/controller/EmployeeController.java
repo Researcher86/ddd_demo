@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Web контроллер для Employee.
  *
  * @author Tanat
- * @version 1.0
+ * @version 1.1
  * @since 14.07.2017.
  */
 @Controller
@@ -30,7 +30,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public ModelAndView get(@PathVariable String id) {
+    public ModelAndView show(@PathVariable String id) {
         return new ModelAndView("show", "employee", employeeService.get(id));
     }
 }
