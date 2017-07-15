@@ -4,11 +4,13 @@ import kz.tanat.app.employee.dto.AddressDto;
 import kz.tanat.app.employee.dto.EmployeeDto;
 import kz.tanat.app.employee.dto.NameDto;
 import kz.tanat.app.employee.dto.PhoneDto;
+import kz.tanat.domain.DomainEventPublisher;
 import kz.tanat.domain.EventTracking;
 import kz.tanat.domain.employee.EmployeeId;
 import kz.tanat.domain.employee.EmployeeRepository;
 import kz.tanat.domain.employee.event.EmployeeArchived;
 import kz.tanat.domain.employee.event.EmployeeReinstated;
+import kz.tanat.domain.event.EventRepository;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,12 +29,13 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 
 /**
  * Тестирование сервиса по работе с агрегатом/сущностью сотрудник.
  *
  * @author Tanat
- * @version 1.6
+ * @version 1.7
  * @since 08.07.2017.
  */
 @RunWith(MockitoJUnitRunner.class)
@@ -44,6 +47,12 @@ public class EmployeeServiceTest {
 
     @Mock
     private EmployeeRepository employeeRepository;
+
+    @Mock
+    private EventRepository eventRepository;
+
+//    @Mock
+//    private StoredEvent storedEvent;
 
     private EmployeeService service;
 
@@ -60,8 +69,12 @@ public class EmployeeServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        given(employeeRepository.findOne(new EmployeeId(uuidId))).willReturn(createDto.createEmployee(new EmployeeId(uuidId)));
-        service = new DefaultEmployeeService(employeeRepository);
+        DomainEventPublisher.instance().reset();
+        when(employeeRepository.findOne(new EmployeeId(uuidId))).thenReturn(createDto.createEmployee(new EmployeeId(uuidId)));
+//        when(eventStore.save(any(StoredEvent.class))).thenReturn(storedEvent);
+//        given(eventStore.save(any(StoredEvent.class))).willReturn(storedEvent);
+
+        service = new EmployeeService(employeeRepository, eventRepository);
         eventTracking = new EventTracking();
     }
 

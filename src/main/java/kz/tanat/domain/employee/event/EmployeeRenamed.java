@@ -11,14 +11,17 @@ import java.time.LocalDate;
  * Событие, которое генерируется при изменении имени сотрудника.
  *
  * @author Tanat
- * @version 1.0
+ * @version 1.1
  * @since 07.07.2017.
  */
 public class EmployeeRenamed implements DomainEvent {
-    private final EmployeeId id;
-    private final Name name;
-    private final int eventVersion;
-    private final LocalDate occurredOn;
+    private EmployeeId id;
+    private Name name;
+    private int eventVersion;
+    private LocalDate occurredOn;
+
+    private EmployeeRenamed() {
+    }
 
     public EmployeeRenamed(EmployeeId id, Name name) {
         this.id = id;

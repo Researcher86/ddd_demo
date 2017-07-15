@@ -10,14 +10,17 @@ import java.time.LocalDate;
  * Событие, которое генерируется при восстановлении дела сотрудника из архива.
  *
  * @author Tanat
- * @version 1.0
+ * @version 1.1
  * @since 07.07.2017.
  */
 public class EmployeeReinstated implements DomainEvent {
-    private final EmployeeId id;
-    private final LocalDate date;
-    private final int eventVersion;
-    private final LocalDate occurredOn;
+    private EmployeeId id;
+    private LocalDate date;
+    private int eventVersion;
+    private LocalDate occurredOn;
+
+    private EmployeeReinstated() {
+    }
 
     public EmployeeReinstated(EmployeeId id, LocalDate date) {
         this.id = id;

@@ -10,13 +10,16 @@ import java.time.LocalDate;
  * Событие, которое генерируется при удалении дела сотрудника из системы.
  *
  * @author Tanat
- * @version 1.0
+ * @version 1.1
  * @since 07.07.2017.
  */
 public class EmployeeRemoved implements DomainEvent {
-    private final EmployeeId id;
-    private final int eventVersion;
-    private final LocalDate occurredOn;
+    private EmployeeId id;
+    private int eventVersion;
+    private LocalDate occurredOn;
+
+    private EmployeeRemoved() {
+    }
 
     public EmployeeRemoved(EmployeeId id) {
         this.id = id;

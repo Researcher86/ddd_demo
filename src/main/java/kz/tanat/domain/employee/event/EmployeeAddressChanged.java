@@ -11,14 +11,17 @@ import java.time.LocalDate;
  * Событие, которое генерируется при изменении адреса сотрудника.
  *
  * @author Tanat
- * @version 1.0
+ * @version 1.1
  * @since 07.07.2017.
  */
 public class EmployeeAddressChanged implements DomainEvent {
-    private final EmployeeId id;
-    private final Address address;
-    private final int eventVersion;
-    private final LocalDate occurredOn;
+    private EmployeeId id;
+    private Address address;
+    private int eventVersion;
+    private LocalDate occurredOn;
+
+    private EmployeeAddressChanged() {
+    }
 
     public EmployeeAddressChanged(EmployeeId id, Address address) {
         this.id = id;
