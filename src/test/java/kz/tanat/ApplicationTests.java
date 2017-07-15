@@ -25,7 +25,6 @@ import static org.junit.Assert.assertThat;
  * Интеграционные тесты всей системы.
  *
  * @author Tanat
- * @version 1.1
  * @since 07.07.2017.
  */
 @RunWith(SpringRunner.class)

@@ -7,7 +7,6 @@ import java.util.Objects;
  * Объект значение, телефон сотрудника.
  *
  * @author Tanat
- * @version 1.2
  * @since 07.07.2017.
  */
 @Embeddable

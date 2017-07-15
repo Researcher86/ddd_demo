@@ -8,7 +8,6 @@ import java.util.List;
  * Помогает фиксировать и тестировать события, произошедшие в системе.
  *
  * @author Tanat
- * @version 1.1
  * @since 07.07.2017.
  */
 public class EventTracking {

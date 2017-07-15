@@ -10,7 +10,6 @@ import java.time.LocalDate;
  * Событие, которое генерируется при внесении нового дела сотрудника в систему.
  *
  * @author Tanat
- * @version 1.1
  * @since 07.07.2017.
  */
 public class EmployeeCreated implements DomainEvent {

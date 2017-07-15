@@ -11,7 +11,6 @@ import java.time.LocalDate;
  * Событие, которое генерируется при внесении нового номера телефона в дело сотрудника.
  *
  * @author Tanat
- * @version 1.1
  * @since 07.07.2017.
  */
 public class EmployeePhoneAdded implements DomainEvent {

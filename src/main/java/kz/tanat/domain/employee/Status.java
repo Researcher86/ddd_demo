@@ -10,7 +10,6 @@ import java.util.Objects;
  * Статус сотрудника в системе.
  *
  * @author Tanat
- * @version 1.3
  * @since 07.07.2017.
  */
 @Embeddable

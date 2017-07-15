@@ -16,7 +16,6 @@ import static org.junit.Assert.*;
  * Тестируем логику работы телефонных номеров сотрудников.
  *
  * @author Tanat
- * @version 1.2
  * @since 07.07.2017.
  */
 public class PhoneTest {

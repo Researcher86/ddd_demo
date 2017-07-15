@@ -8,7 +8,6 @@ import java.util.UUID;
  * Интерфейс хранилища данных по работе с агрегатом/сущностью сотрудник.
  *
  * @author Tanat
- * @version 1.2
  * @since 09.07.2017.
  */
 public interface EmployeeRepository extends JpaRepository<Employee, EmployeeId> {

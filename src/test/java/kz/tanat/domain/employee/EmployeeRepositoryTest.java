@@ -19,7 +19,6 @@ import static org.junit.Assert.*;
  * Тест хранилища данных об сотрудниках.
  *
  * @author Tanat
- * @version 1.3
  * @since 09.07.2017.
  */
 @RunWith(SpringRunner.class)

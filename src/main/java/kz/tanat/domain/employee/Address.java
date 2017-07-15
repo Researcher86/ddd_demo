@@ -7,7 +7,6 @@ import java.util.Objects;
  * Объект значение для хранения информации о адресе сотрудника.
  *
  * @author Tanat
- * @version 1.1
  * @since 07.07.2017.
  */
 @Embeddable

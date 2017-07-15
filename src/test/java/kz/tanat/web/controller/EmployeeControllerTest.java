@@ -27,7 +27,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Тестируем реализацию Web контроллера.
  *
  * @author Tanat
- * @version 1.2
  * @since 15.07.2017.
  */
 @RunWith(SpringRunner.class)

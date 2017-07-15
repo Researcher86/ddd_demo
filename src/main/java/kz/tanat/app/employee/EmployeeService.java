@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
  * Сервис по работе с агрегатом/сущностью сотрудник.
  *
  * @author Tanat
- * @version 1.6
  * @since 09.07.2017.
  */
 @Slf4j

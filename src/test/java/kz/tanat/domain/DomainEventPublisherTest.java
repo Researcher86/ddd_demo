@@ -8,7 +8,6 @@ import static org.junit.Assert.*;
  * Тестируем логику рассылки уведомлений системы.
  *
  * @author Tanat
- * @version 1.0
  * @since 09.07.2017.
  */
 public class DomainEventPublisherTest {

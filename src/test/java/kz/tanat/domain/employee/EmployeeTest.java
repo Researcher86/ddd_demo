@@ -19,7 +19,6 @@ import static org.junit.Assert.*;
  * Тестируем логику работы агрегата/сущности сотрудников.
  *
  * @author Tanat
- * @version 1.2
  * @since 07.07.2017.
  */
 public class EmployeeTest {

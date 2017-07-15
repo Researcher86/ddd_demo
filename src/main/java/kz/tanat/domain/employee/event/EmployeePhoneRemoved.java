@@ -11,7 +11,6 @@ import java.time.LocalDate;
  * Событие, которое генерируется при удалении номера телефона из дела сотрудника.
  *
  * @author Tanat
- * @version 1.1
  * @since 07.07.2017.
  */
 public class EmployeePhoneRemoved implements DomainEvent {

@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
  * Объект хранит информацию об имени сотрудника.
  *
  * @author Tanat
- * @version 1.1
  * @since 09.07.2017.
  */
 @Data

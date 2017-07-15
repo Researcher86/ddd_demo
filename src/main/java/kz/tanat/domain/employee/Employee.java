@@ -15,7 +15,6 @@ import java.util.List;
  * Агрегат (Сущность) сотрудник.
  *
  * @author Tanat
- * @version 1.2
  * @since 07.07.2017.
  */
 @Entity

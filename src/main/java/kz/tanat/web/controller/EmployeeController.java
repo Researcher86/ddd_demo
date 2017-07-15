@@ -14,7 +14,6 @@ import java.util.HashMap;
  * Web контроллер для Employee.
  *
  * @author Tanat
- * @version 1.2
  * @since 14.07.2017.
  */
 @Controller

@@ -15,7 +15,6 @@ import java.util.List;
  * Класс для работы со список телефонов сотрудника.
  *
  * @author Tanat
- * @version 1.3
  * @since 07.07.2017.
  */
 @Embeddable

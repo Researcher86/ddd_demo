@@ -1,6 +1,7 @@
 package kz.tanat.web.api;
 
 import kz.tanat.app.employee.EmployeeService;
+import kz.tanat.app.employee.dto.EmployeeDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,6 @@ import java.util.HashMap;
  * REST контроллер для Employee.
  *
  * @author Tanat
- * @version 1.0
  * @since 15.07.2017.
  */
 @RestController
@@ -35,11 +35,11 @@ public class ApiEmployeeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity show(@PathVariable String id) {
-        try {
+    public ResponseEntity<EmployeeDto> show(@PathVariable String id) {
+//        try {
             return ResponseEntity.ok(employeeService.get(id));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.notFound().build();
-        }
+//        } catch (IllegalArgumentException e) {
+//            return ResponseEntity.notFound().build();
+//        }
     }
 }

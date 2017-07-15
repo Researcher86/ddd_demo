@@ -2,6 +2,12 @@ package kz.tanat.domain;
 
 import java.time.LocalDate;
 
+/**
+ * Тестовое событие.
+ *
+ * @author Tanat
+ * @since 09.07.2017.
+ */
 public class TestableDomainEvent implements DomainEvent {
 
     private int eventVersion;

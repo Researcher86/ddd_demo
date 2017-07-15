@@ -8,7 +8,6 @@ import java.util.List;
  * Класс для работы с событиями системы (Шаблон Observer).
  *
  * @author Tanat
- * @version 1.0
  * @since 07.07.2017.
  */
 public class DomainEventPublisher {

@@ -9,7 +9,6 @@ import java.util.UUID;
  * Объект значение, идентификатор сотрудника.
  *
  * @author Tanat
- * @version 1.1
  * @since 07.07.2017.
  */
 @Embeddable

@@ -29,30 +29,9 @@ import static springfox.documentation.spi.DocumentationType.SWAGGER_2;
  */
 @Slf4j
 @SpringBootApplication
-@EnableSwagger2
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-    }
-
-    @Bean
-    public Docket newsApi() {
-        return new Docket(SWAGGER_2)
-                .groupName("employees")
-                .apiInfo(apiInfo())
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("kz.tanat.web"))
-                .build();
-    }
-
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("Employee REST API")
-                .contact(new Contact("Alpenov Tanat",
-                        "https://github.com/Batiaev/demo-quotation-webservice",
-                        "researcher2286@gmail.com"))
-                .version("1.0")
-                .build();
     }
 
     @Autowired

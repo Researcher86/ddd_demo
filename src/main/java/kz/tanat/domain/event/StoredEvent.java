@@ -14,7 +14,6 @@ import java.time.LocalDate;
  * Сущность Хранить События.
  *
  * @author Tanat
- * @version 1.0
  * @since 14.07.2017.
  */
 @Entity

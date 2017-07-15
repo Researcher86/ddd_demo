@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
  * Объект хранит информацию об сотруднике для добавления в систему.
  *
  * @author Tanat
- * @version 1.4
  * @since 09.07.2017.
  */
 @Data

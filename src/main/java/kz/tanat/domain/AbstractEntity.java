@@ -9,7 +9,7 @@ import java.time.LocalDate;
 /**
  * Базовый класс для всех сущностей системы.
  *
- * @version 1.0
+ * @author Tanat
  * @since 11.07.2017.
  */
 @MappedSuperclass

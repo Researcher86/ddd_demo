@@ -34,7 +34,6 @@ import static org.mockito.BDDMockito.given;
  * Тестирование сервиса по работе с агрегатом/сущностью сотрудник.
  *
  * @author Tanat
- * @version 1.8
  * @since 08.07.2017.
  */
 @RunWith(MockitoJUnitRunner.class)
