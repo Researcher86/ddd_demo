@@ -21,6 +21,7 @@ import static springfox.documentation.spi.DocumentationType.SWAGGER_2;
 public class WebConfig {
     @Bean
     public Docket newsApi() {
+        // http://localhost:8080/swagger-ui.html#/
         return new Docket(SWAGGER_2)
                 .groupName("employees")
                 .apiInfo(new ApiInfoBuilder()
