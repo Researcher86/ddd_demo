@@ -28,13 +28,13 @@ public class EmployeeController {
 
     @GetMapping
     public ModelAndView list() {
-        return new ModelAndView("list", "employees", employeeService.getAll());
+        return new ModelAndView("employee/list", "employees", employeeService.getAll());
     }
 
     @GetMapping("/{id}")
     public ModelAndView show(@PathVariable String id) {
         try {
-            return new ModelAndView("show", "employee", employeeService.get(id));
+            return new ModelAndView("employee/show", "employee", employeeService.get(id));
         } catch (IllegalArgumentException e) {
             return new ModelAndView("error/404", new HashMap<String, String>(){{put("error", e.getMessage());}}, HttpStatus.NOT_FOUND);
         }
