@@ -1,5 +1,7 @@
 package kz.tanat.app.employee.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import kz.tanat.domain.employee.Address;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,11 +16,17 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel("Address")
 public class AddressDto {
+    @ApiModelProperty(notes = "Страна")
     private String country;
+    @ApiModelProperty(notes = "Регион")
     private String region;
+    @ApiModelProperty(notes = "Город")
     private String city;
+    @ApiModelProperty(notes = "Улица")
     private String street;
+    @ApiModelProperty(notes = "Дом")
     private String house;
 
     public AddressDto(Address address) {

@@ -1,5 +1,7 @@
 package kz.tanat.app.employee.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import kz.tanat.domain.employee.Employee;
 import kz.tanat.domain.employee.EmployeeId;
 import lombok.AllArgsConstructor;
@@ -18,10 +20,15 @@ import java.util.stream.Collectors;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel("Employee")
 public class EmployeeDto {
+    @ApiModelProperty(notes = "Идентификатор сотрудника")
     private String id;
+    @ApiModelProperty(notes = "Имя сотрудника")
     private NameDto name;
+    @ApiModelProperty(notes = "Адрес сорудника")
     private AddressDto address;
+    @ApiModelProperty(notes = "Телефоны сотрудника")
     private List<PhoneDto> phones;
 
     public EmployeeDto(Employee employee) {
