@@ -15,18 +15,10 @@ public class EventTracking {
     private List<DomainEvent> events = new ArrayList<>();
 
     public EventTracking() {
-        DomainEventPublisher.instance().subscribe(new DomainEventSubscriber<DomainEvent>() {
-            @Override
-            public void handleEvent(DomainEvent domainEvent) {
-                handledEvents.add(domainEvent.getClass());
-                events.add(domainEvent);
-            }
-
-            @Override
-            public Class<DomainEvent> subscribedToEventType() {
-                return DomainEvent.class;
-            }
-        });
+        DomainEventPublisher.instance().subscribe((DomainEventSubscriber<DomainEvent>) domainEvent -> {
+			handledEvents.add(domainEvent.getClass());
+			events.add(domainEvent);
+		});
     }
 
     public void expectedEvents(int anEventCount) {

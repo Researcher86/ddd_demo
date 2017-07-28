@@ -36,19 +36,20 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
         this.eventRepository = eventRepository;
 
-        DomainEventPublisher.instance().subscribe(new DomainEventSubscriber<DomainEvent>() {
-            @Override
-            public void handleEvent(DomainEvent domainEvent) {
-                log.info("Event: {}", domainEvent.getClass().getSimpleName());
+//        DomainEventPublisher.instance().subscribe(new DomainEventSubscriber<DomainEvent>() {
+//            @Override
+//            public void handleEvent(DomainEvent domainEvent) {
+//                log.info("Event: {}", domainEvent.getClass().getSimpleName());
+//
+//                eventRepository.save(new StoredEvent(domainEvent));
+//            }
+//        });
 
-                eventRepository.save(new StoredEvent(domainEvent));
-            }
+        DomainEventPublisher.instance().subscribe((DomainEventSubscriber<DomainEvent>) domainEvent -> {
+			log.info("Event: {}", domainEvent.getClass().getSimpleName());
 
-            @Override
-            public Class<DomainEvent> subscribedToEventType() {
-                return DomainEvent.class;
-            }
-        });
+			eventRepository.save(new StoredEvent(domainEvent));
+		});
     }
 
     public EmployeeDto get(String employeeId) {

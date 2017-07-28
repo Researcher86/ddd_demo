@@ -1,5 +1,7 @@
 package kz.tanat.domain;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -17,7 +19,17 @@ public class DomainEventPublisher {
     private boolean publishing;
 
     @SuppressWarnings("rawtypes")
-    private List subscribers;
+    private List<Subscriber> subscribers;
+
+    private static class Subscriber {
+        private DomainEventSubscriber subscriber;
+        private Class<DomainEvent> eventType;
+
+        public Subscriber(DomainEventSubscriber subscriber, Class<DomainEvent> eventType) {
+            this.subscriber = subscriber;
+            this.eventType = eventType;
+        }
+    }
 
     public static DomainEventPublisher instance() {
         return instance.get();
@@ -32,13 +44,13 @@ public class DomainEventPublisher {
                 Class<?> eventType = domainEvent.getClass();
 
                 @SuppressWarnings("unchecked")
-                List<DomainEventSubscriber<T>> allSubscribers = this.subscribers();
+                List<Subscriber> allSubscribers = this.subscribers();
 
-                for (DomainEventSubscriber<T> subscriber : allSubscribers) {
-                    Class<?> subscribedToType = subscriber.subscribedToEventType();
+                for (Subscriber subscriber : allSubscribers) {
+                    Class<?> subscribedToType = subscriber.eventType;
 
                     if (eventType == subscribedToType || subscribedToType == DomainEvent.class) {
-                        subscriber.handleEvent(domainEvent);
+                        subscriber.subscriber.handleEvent(domainEvent);
                     }
                 }
 
@@ -65,7 +77,37 @@ public class DomainEventPublisher {
         if (!this.isPublishing()) {
             this.ensureSubscribersList();
 
-            this.subscribers().add(subscriber);
+//            Class<T> aClass = subscriber.getClass().;
+//            System.out.println(aClass.getSimpleName());
+
+//            try {
+//                Type type = subscriber.getClass().getGenericInterfaces()[0];
+//                Type generic = ((ParameterizedType) type).getActualTypeArguments()[0];
+//                Class<DomainEvent> clazz = (Class<DomainEvent>) Class.forName(generic.getTypeName());
+//                this.subscribers().add(new Subscriber(subscriber, clazz));
+//            } catch (ClassNotFoundException e) {
+//                throw new RuntimeException(e);
+//            }
+
+
+            Type[] genericInterfaces = subscriber.getClass().getGenericInterfaces();
+            for (Type genericInterface : genericInterfaces) {
+                if (genericInterface instanceof ParameterizedType) {
+                    Type[] genericTypes = ((ParameterizedType) genericInterface).getActualTypeArguments();
+                    for (Type genericType : genericTypes) {
+                        System.out.println("Generic type: " + genericType);
+                    }
+                }
+            }
+
+            Class<T> thisClass = null;
+            Type type = getClass().getGenericSuperclass();
+            if (type instanceof ParameterizedType) {
+                ParameterizedType parameterizedType = (ParameterizedType) type;
+                Type[] typeArguments = parameterizedType.getActualTypeArguments();
+                thisClass = (Class<T>) typeArguments[0];
+                System.out.println("Generic type: " + thisClass);
+            }
         }
     }
 
@@ -79,7 +121,7 @@ public class DomainEventPublisher {
     @SuppressWarnings("rawtypes")
     private void ensureSubscribersList() {
         if (!this.hasSubscribers()) {
-            this.setSubscribers(new ArrayList());
+            this.setSubscribers(new ArrayList<>());
         }
     }
 
@@ -96,12 +138,12 @@ public class DomainEventPublisher {
     }
 
     @SuppressWarnings("rawtypes")
-    private List subscribers() {
+    private List<Subscriber> subscribers() {
         return this.subscribers;
     }
 
     @SuppressWarnings("rawtypes")
-    private void setSubscribers(List subscriberList) {
+    private void setSubscribers(List<Subscriber> subscriberList) {
         this.subscribers = subscriberList;
     }
 }

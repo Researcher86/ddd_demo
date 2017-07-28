@@ -9,6 +9,4 @@ package kz.tanat.domain;
 public interface DomainEventSubscriber<T> {
 
     void handleEvent(final T domainEvent);
-
-    Class<T> subscribedToEventType();
 }
