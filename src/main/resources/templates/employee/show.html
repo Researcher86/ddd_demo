@@ -7,6 +7,10 @@
 <body>
 <table>
     <tr>
+        <td style="font-weight: bold">Full Name:</td>
+        <td th:text="${@employeeFullName.get(employee)}"></td>
+    </tr>
+    <tr>
         <td style="font-weight: bold">Name:</td>
         <td th:text="${employee.name}"></td>
     </tr>
