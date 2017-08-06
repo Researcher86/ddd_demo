@@ -55,7 +55,7 @@ class Phones {
     }
 
     boolean contains(Phone phone) {
-        return this.phones.contains(phone);
+        return phones.contains(phone);
     }
 
     List<Phone> getAll() {

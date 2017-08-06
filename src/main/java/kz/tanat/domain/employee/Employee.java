@@ -48,26 +48,26 @@ public class Employee extends AbstractEntity {
 
     public void rename(Name name) {
         this.name = name;
-        DomainEventPublisher.instance().publish(new EmployeeRenamed(this.id, name));
+        DomainEventPublisher.instance().publish(new EmployeeRenamed(id, name));
     }
 
     public void changeAddress(Address address) {
         this.address = address;
-        DomainEventPublisher.instance().publish(new EmployeeAddressChanged(this.id, address));
+        DomainEventPublisher.instance().publish(new EmployeeAddressChanged(id, address));
     }
 
     public void addPhone(Phone phone) {
         this.phones.add(phone);
-        DomainEventPublisher.instance().publish(new EmployeePhoneAdded(this.id, phone));
+        DomainEventPublisher.instance().publish(new EmployeePhoneAdded(id, phone));
     }
 
     public void removePhone(int index) {
-        Phone phone = this.phones.remove(index);
-        DomainEventPublisher.instance().publish(new EmployeePhoneRemoved(this.id, phone));
+        Phone phone = phones.remove(index);
+        DomainEventPublisher.instance().publish(new EmployeePhoneRemoved(id, phone));
     }
 
     public boolean containsPhone(Phone phone) {
-        return this.phones.contains(phone);
+        return phones.contains(phone);
     }
 
     public void archive(LocalDate date) {
@@ -75,8 +75,8 @@ public class Employee extends AbstractEntity {
             throw new DomainException("Employee is already archived.");
         }
 
-        this.status.add(new Status(Status.State.ARCHIVED, date));
-        DomainEventPublisher.instance().publish(new EmployeeArchived(this.id, date));
+        status.add(new Status(Status.State.ARCHIVED, date));
+        DomainEventPublisher.instance().publish(new EmployeeArchived(id, date));
     }
 
     public void reinstate(LocalDate date) {
@@ -84,8 +84,8 @@ public class Employee extends AbstractEntity {
             throw new DomainException("Employee is not archived.");
         }
 
-        this.status.add(new Status(Status.State.ACTIVE, date));
-        DomainEventPublisher.instance().publish(new EmployeeReinstated(this.id, date));
+        status.add(new Status(Status.State.ACTIVE, date));
+        DomainEventPublisher.instance().publish(new EmployeeReinstated(id, date));
     }
 
     public void remove() {
@@ -93,7 +93,7 @@ public class Employee extends AbstractEntity {
             throw new DomainException("Cannot remove active employee.");
         }
 
-        DomainEventPublisher.instance().publish(new EmployeeRemoved(this.id));
+        DomainEventPublisher.instance().publish(new EmployeeRemoved(id));
     }
 
     public boolean isActive() {
@@ -105,7 +105,7 @@ public class Employee extends AbstractEntity {
     }
 
     public Status getCurrentStatus() {
-        return this.status.get(this.status.size() - 1);
+        return status.get(status.size() - 1);
     }
 
     public EmployeeId getId() {
