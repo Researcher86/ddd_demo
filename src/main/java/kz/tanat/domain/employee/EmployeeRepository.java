@@ -12,7 +12,7 @@ import java.util.UUID;
  */
 public interface EmployeeRepository extends JpaRepository<Employee, EmployeeId> {
 
-    default EmployeeId nextId() {
-        return new EmployeeId(UUID.randomUUID());
-    }
+	default EmployeeId nextId() {
+		return new EmployeeId(UUID.randomUUID());
+	}
 }

@@ -3,7 +3,8 @@ package kz.tanat.domain;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Тестируем логику рассылки уведомлений системы.
@@ -13,31 +14,31 @@ import static org.junit.Assert.*;
  */
 public class DomainEventPublisherTest {
 
-    private boolean anotherEventHandled;
-    private boolean eventHandled;
+	private boolean anotherEventHandled;
+	private boolean eventHandled;
 
-    @Test
-    public void testDomainEventPublisherPublish() throws Exception {
-        DomainEventPublisher.instance().reset();
+	@Test
+	public void testDomainEventPublisherPublish() throws Exception {
+		DomainEventPublisher.instance().reset();
 
-        DomainEventPublisher.instance().subscribe((DomainEventSubscriber<TestableDomainEvent>) domainEvent -> {
+		DomainEventPublisher.instance().subscribe((DomainEventSubscriber<TestableDomainEvent>) domainEvent -> {
 			Assert.assertEquals(100L, domainEvent.getId());
 			Assert.assertEquals("test", domainEvent.getName());
 			eventHandled = true;
 		});
 
-        assertFalse(this.eventHandled);
+		assertFalse(this.eventHandled);
 
-        DomainEventPublisher.instance().publish(new TestableDomainEvent(100L, "test"));
+		DomainEventPublisher.instance().publish(new TestableDomainEvent(100L, "test"));
 
-        assertTrue(this.eventHandled);
-    }
+		assertTrue(this.eventHandled);
+	}
 
-    @Test
-    public void testDomainEventPublisherBlocked() throws Exception {
-        DomainEventPublisher.instance().reset();
+	@Test
+	public void testDomainEventPublisherBlocked() throws Exception {
+		DomainEventPublisher.instance().reset();
 
-        DomainEventPublisher.instance().subscribe((DomainEventSubscriber<TestableDomainEvent>) domainEvent -> {
+		DomainEventPublisher.instance().subscribe((DomainEventSubscriber<TestableDomainEvent>) domainEvent -> {
 			Assert.assertEquals(100L, domainEvent.getId());
 			Assert.assertEquals("test", domainEvent.getName());
 			eventHandled = true;
@@ -45,18 +46,18 @@ public class DomainEventPublisherTest {
 			DomainEventPublisher.instance().publish(new AnotherTestableDomainEvent(1000.0));
 		});
 
-        DomainEventPublisher.instance().subscribe((DomainEventSubscriber<AnotherTestableDomainEvent>) domainEvent -> {
+		DomainEventPublisher.instance().subscribe((DomainEventSubscriber<AnotherTestableDomainEvent>) domainEvent -> {
 			// should never be reached due to blocked publisher
 			Assert.assertEquals(1000.0, domainEvent.getValue(), 0.001);
 			anotherEventHandled = true;
 		});
 
-        assertFalse(this.eventHandled);
-        assertFalse(this.anotherEventHandled);
+		assertFalse(this.eventHandled);
+		assertFalse(this.anotherEventHandled);
 
-        DomainEventPublisher.instance().publish(new TestableDomainEvent(100L, "test"));
+		DomainEventPublisher.instance().publish(new TestableDomainEvent(100L, "test"));
 
-        assertTrue(this.eventHandled);
-        assertFalse(this.anotherEventHandled);
-    }
+		assertTrue(this.eventHandled);
+		assertFalse(this.anotherEventHandled);
+	}
 }

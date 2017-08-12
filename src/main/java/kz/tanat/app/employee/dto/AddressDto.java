@@ -18,26 +18,26 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @ApiModel("Address")
 public class AddressDto {
-    @ApiModelProperty(notes = "Страна")
-    private String country;
-    @ApiModelProperty(notes = "Регион")
-    private String region;
-    @ApiModelProperty(notes = "Город")
-    private String city;
-    @ApiModelProperty(notes = "Улица")
-    private String street;
-    @ApiModelProperty(notes = "Дом")
-    private String house;
+	@ApiModelProperty(notes = "Страна")
+	private String country;
+	@ApiModelProperty(notes = "Регион")
+	private String region;
+	@ApiModelProperty(notes = "Город")
+	private String city;
+	@ApiModelProperty(notes = "Улица")
+	private String street;
+	@ApiModelProperty(notes = "Дом")
+	private String house;
 
-    public AddressDto(Address address) {
-        this.country = address.getCountry();
-        this.region = address.getRegion();
-        this.city = address.getCity();
-        this.street = address.getStreet();
-        this.house = address.getHouse();
-    }
+	public AddressDto(Address address) {
+		this.country = address.getCountry();
+		this.region = address.getRegion();
+		this.city = address.getCity();
+		this.street = address.getStreet();
+		this.house = address.getHouse();
+	}
 
-    public Address createAddress() {
-        return new Address(country, region, city, street, house);
-    }
+	public Address createAddress() {
+		return new Address(country, region, city, street, house);
+	}
 }

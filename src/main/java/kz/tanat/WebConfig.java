@@ -19,21 +19,21 @@ import static springfox.documentation.spi.DocumentationType.SWAGGER_2;
 @Configuration
 @EnableSwagger2
 public class WebConfig {
-    @Bean
-    public Docket newsApi() {
-        // http://localhost:8080/swagger-ui.html#/
-        return new Docket(SWAGGER_2)
-                .groupName("employees")
-                .apiInfo(new ApiInfoBuilder()
-                        .title("Employee REST API")
-                        .contact(new Contact("Alpenov Tanat",
-                                "https://github.com/Researcher86/ddd_demo",
-                                "researcher2286@gmail.com"))
-                        .version("1.0")
-                        .build())
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("kz.tanat.web"))
-                .build();
-    }
+	@Bean
+	public Docket newsApi() {
+		// http://localhost:8080/swagger-ui.html#/
+		return new Docket(SWAGGER_2)
+				.groupName("employees")
+				.apiInfo(new ApiInfoBuilder()
+						.title("Employee REST API")
+						.contact(new Contact("Alpenov Tanat",
+								"https://github.com/Researcher86/ddd_demo",
+								"researcher2286@gmail.com"))
+						.version("1.0")
+						.build())
+				.select()
+				.apis(RequestHandlerSelectors.basePackage("kz.tanat.web"))
+				.build();
+	}
 
 }

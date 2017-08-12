@@ -7,7 +7,7 @@ package kz.tanat.domain;
  * @since 07.07.2017.
  */
 public class DomainException extends RuntimeException {
-    public DomainException(String message) {
-        super(message);
-    }
+	public DomainException(String message) {
+		super(message);
+	}
 }

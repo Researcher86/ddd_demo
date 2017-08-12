@@ -19,67 +19,67 @@ import static org.junit.Assert.*;
  * @since 07.07.2017.
  */
 public class PhoneTest {
-    private EventTracking eventTracking;
+	private EventTracking eventTracking;
 
-    @Rule
-    public ExpectedException expectedEx = ExpectedException.none();
+	@Rule
+	public ExpectedException expectedEx = ExpectedException.none();
 
-    @Before
-    public void setUp() throws Exception {
-        eventTracking = new EventTracking();
-    }
+	@Before
+	public void setUp() throws Exception {
+		eventTracking = new EventTracking();
+	}
 
-    @Test
-    public void add() {
-        Employee employee = EmployeeBuilder.instance().build();
-        Phone phone = new Phone(7, "888", "00000001");
-        employee.addPhone(phone);
-        assertFalse(employee.getPhones().isEmpty());
-        assertTrue(employee.containsPhone(phone));
+	@Test
+	public void add() {
+		Employee employee = EmployeeBuilder.instance().build();
+		Phone phone = new Phone(7, "888", "00000001");
+		employee.addPhone(phone);
+		assertFalse(employee.getPhones().isEmpty());
+		assertTrue(employee.containsPhone(phone));
 
-        eventTracking.expectedLastEvent(EmployeePhoneAdded.class);
-    }
+		eventTracking.expectedLastEvent(EmployeePhoneAdded.class);
+	}
 
-    @Test
-    public void addExists() {
-        Phone phone = new Phone(7, "888", "00000001");
-        Employee employee = EmployeeBuilder.instance()
-                .withPhones(Arrays.asList(phone))
-                .build();
+	@Test
+	public void addExists() {
+		Phone phone = new Phone(7, "888", "00000001");
+		Employee employee = EmployeeBuilder.instance()
+				.withPhones(Arrays.asList(phone))
+				.build();
 
-        expectedEx.expectMessage("Phone already exists.");
+		expectedEx.expectMessage("Phone already exists.");
 
-        employee.addPhone(phone);
-    }
+		employee.addPhone(phone);
+	}
 
-    @Test
-    public void remove() {
-        Employee employee = EmployeeBuilder.instance()
-                .withPhones(Arrays.asList(
-                        new Phone(7, "888", "00000001"),
-                        new Phone(7, "888", "00000002")))
-                .build();
-        assertEquals(2, employee.getPhones().size());
+	@Test
+	public void remove() {
+		Employee employee = EmployeeBuilder.instance()
+				.withPhones(Arrays.asList(
+						new Phone(7, "888", "00000001"),
+						new Phone(7, "888", "00000002")))
+				.build();
+		assertEquals(2, employee.getPhones().size());
 
-        employee.removePhone(1);
+		employee.removePhone(1);
 
-        assertEquals(1, employee.getPhones().size());
-        eventTracking.expectedLastEvent(EmployeePhoneRemoved.class);
-    }
+		assertEquals(1, employee.getPhones().size());
+		eventTracking.expectedLastEvent(EmployeePhoneRemoved.class);
+	}
 
-    @Test
-    public void removeNotExists() {
-        Employee employee = EmployeeBuilder.instance().build();
-        expectedEx.expectMessage("Phone not found.");
-        employee.removePhone(42);
-    }
+	@Test
+	public void removeNotExists() {
+		Employee employee = EmployeeBuilder.instance().build();
+		expectedEx.expectMessage("Phone not found.");
+		employee.removePhone(42);
+	}
 
-    @Test
-    public void removeLast() {
-        Employee employee = EmployeeBuilder.instance()
-                .withPhones(Arrays.asList(new Phone(7, "888", "00000001")))
-                .build();
-        expectedEx.expectMessage("Cannot remove the last phone.");
-        employee.removePhone(0);
-    }
+	@Test
+	public void removeLast() {
+		Employee employee = EmployeeBuilder.instance()
+				.withPhones(Arrays.asList(new Phone(7, "888", "00000001")))
+				.build();
+		expectedEx.expectMessage("Cannot remove the last phone.");
+		employee.removePhone(0);
+	}
 }

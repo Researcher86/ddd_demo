@@ -25,84 +25,84 @@ import static org.junit.Assert.*;
 @DataJpaTest
 @Transactional
 public class EmployeeRepositoryTest {
-    @Autowired
-    private EmployeeRepository repository;
+	@Autowired
+	private EmployeeRepository repository;
 
-    @Rule
-    public ExpectedException expectedEx = ExpectedException.none();
+	@Rule
+	public ExpectedException expectedEx = ExpectedException.none();
 
-    @Test
-    public void get() throws Exception {
-        Employee employee = EmployeeBuilder.instance().build();
-        repository.save(employee);
+	@Test
+	public void get() throws Exception {
+		Employee employee = EmployeeBuilder.instance().build();
+		repository.save(employee);
 
-        Employee found = repository.getOne(employee.getId());
+		Employee found = repository.getOne(employee.getId());
 
-        assertNotNull(found);
-        assertEquals(employee.getId(), found.getId());
-    }
+		assertNotNull(found);
+		assertEquals(employee.getId(), found.getId());
+	}
 
-    @Test
-    public void add() throws Exception {
-        Employee employee = EmployeeBuilder.instance()
-                .withPhones(Arrays.asList(
-                        new Phone(7, "888", "00000001"),
-                        new Phone(7, "888", "00000002")))
-                .build();
-        repository.save(employee);
+	@Test
+	public void add() throws Exception {
+		Employee employee = EmployeeBuilder.instance()
+				.withPhones(Arrays.asList(
+						new Phone(7, "888", "00000001"),
+						new Phone(7, "888", "00000002")))
+				.build();
+		repository.save(employee);
 
-        Employee found = repository.getOne(employee.getId());
+		Employee found = repository.getOne(employee.getId());
 
-        assertEquals(employee.getId(), found.getId());
-        assertEquals(employee.getName(), found.getName());
-        assertEquals(employee.getAddress(), found.getAddress());
-        assertEquals(employee.getCreateDate(), found.getCreateDate());
-        assertThat(employee.getPhones(), containsInAnyOrder(found.getPhones().toArray()));
-        assertThat(employee.getStatus(), containsInAnyOrder(found.getStatus().toArray()));
-    }
+		assertEquals(employee.getId(), found.getId());
+		assertEquals(employee.getName(), found.getName());
+		assertEquals(employee.getAddress(), found.getAddress());
+		assertEquals(employee.getCreateDate(), found.getCreateDate());
+		assertThat(employee.getPhones(), containsInAnyOrder(found.getPhones().toArray()));
+		assertThat(employee.getStatus(), containsInAnyOrder(found.getStatus().toArray()));
+	}
 
-    @Test
-    public void save() throws Exception {
-        Employee employee = EmployeeBuilder.instance()
-                .withPhones(Arrays.asList(
-                        new Phone(7, "888", "00000001"),
-                        new Phone(7, "888", "00000002")))
-                .build();
-        repository.save(employee);
+	@Test
+	public void save() throws Exception {
+		Employee employee = EmployeeBuilder.instance()
+				.withPhones(Arrays.asList(
+						new Phone(7, "888", "00000001"),
+						new Phone(7, "888", "00000002")))
+				.build();
+		repository.save(employee);
 
-        Employee edit = repository.getOne(employee.getId());
+		Employee edit = repository.getOne(employee.getId());
 
-        edit.rename(new Name("New", "Test", "Name"));
-        edit.addPhone(new Phone(7, "888", "00000003"));
-        edit.archive(LocalDate.now());
-        repository.save(edit);
+		edit.rename(new Name("New", "Test", "Name"));
+		edit.addPhone(new Phone(7, "888", "00000003"));
+		edit.archive(LocalDate.now());
+		repository.save(edit);
 
-        Employee found = repository.getOne(employee.getId());
-        assertTrue(found.isArchived());
-        assertEquals(edit.getName(), found.getName());
-        assertThat(edit.getPhones(), containsInAnyOrder(found.getPhones().toArray()));
-        assertThat(edit.getStatus(), containsInAnyOrder(found.getStatus().toArray()));
-    }
+		Employee found = repository.getOne(employee.getId());
+		assertTrue(found.isArchived());
+		assertEquals(edit.getName(), found.getName());
+		assertThat(edit.getPhones(), containsInAnyOrder(found.getPhones().toArray()));
+		assertThat(edit.getStatus(), containsInAnyOrder(found.getStatus().toArray()));
+	}
 
-    @Test
-    public void remove() throws Exception {
-        Employee employee = EmployeeBuilder.instance().build();
-        this.repository.save(employee);
+	@Test
+	public void remove() throws Exception {
+		Employee employee = EmployeeBuilder.instance().build();
+		this.repository.save(employee);
 
-        Employee found = this.repository.findOne(employee.getId());
-        assertNotNull(found);
+		Employee found = this.repository.findOne(employee.getId());
+		assertNotNull(found);
 
-        this.repository.delete(employee);
+		this.repository.delete(employee);
 
-        found = this.repository.findOne(employee.getId());
-        assertNull(found);
-    }
+		found = this.repository.findOne(employee.getId());
+		assertNull(found);
+	}
 
-    @Test
-    public void nextId() throws Exception {
-        for (int i = 0; i < 10; i++) {
-            System.out.println(repository.nextId());
-        }
-    }
+	@Test
+	public void nextId() throws Exception {
+		for (int i = 0; i < 10; i++) {
+			System.out.println(repository.nextId());
+		}
+	}
 
 }

@@ -32,46 +32,46 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(EmployeeController.class)
 public class EmployeeControllerTest {
-    @MockBean
-    private EventRepository eventRepository;
-    @MockBean
-    private EmployeeRepository employeeRepository;
-    @MockBean
-    private EmployeeService employeeService;
+	@MockBean
+	private EventRepository eventRepository;
+	@MockBean
+	private EmployeeRepository employeeRepository;
+	@MockBean
+	private EmployeeService employeeService;
 
-    @Autowired
-    private MockMvc mockMvc;
+	@Autowired
+	private MockMvc mockMvc;
 
-    private ObjectMapper mapper = new ObjectMapper();
+	private ObjectMapper mapper = new ObjectMapper();
 
-    @Test
-    public void list() throws Exception {
-        given(employeeService.getAll()).willReturn(Arrays.asList(new EmployeeDto(EmployeeBuilder.instance().build())));
-        mockMvc.perform(get("/employees"))
-                .andDo(print())
-                .andExpect(
-                        status().isOk()
-                );
-    }
+	@Test
+	public void list() throws Exception {
+		given(employeeService.getAll()).willReturn(Arrays.asList(new EmployeeDto(EmployeeBuilder.instance().build())));
+		mockMvc.perform(get("/employees"))
+				.andDo(print())
+				.andExpect(
+						status().isOk()
+				);
+	}
 
-    @Test
-    public void showSuccess() throws Exception {
-        given(employeeService.get(any())).willReturn(new EmployeeDto(EmployeeBuilder.instance().build()));
-        mockMvc.perform(get("/employees/{id}", UUID.randomUUID()))
-                .andDo(print())
-                .andExpect(
-                        status().isOk()
-                );
-    }
+	@Test
+	public void showSuccess() throws Exception {
+		given(employeeService.get(any())).willReturn(new EmployeeDto(EmployeeBuilder.instance().build()));
+		mockMvc.perform(get("/employees/{id}", UUID.randomUUID()))
+				.andDo(print())
+				.andExpect(
+						status().isOk()
+				);
+	}
 
-    @Test
-    public void showNotFound() throws Exception {
-        given(employeeService.get(any())).willThrow(new IllegalArgumentException("Employee not found."));
-        mockMvc.perform(get("/employees/{id}", UUID.randomUUID()))
-                .andDo(print())
-                .andExpect(
-                        status().isNotFound()
-                );
-    }
+	@Test
+	public void showNotFound() throws Exception {
+		given(employeeService.get(any())).willThrow(new IllegalArgumentException("Employee not found."));
+		mockMvc.perform(get("/employees/{id}", UUID.randomUUID()))
+				.andDo(print())
+				.andExpect(
+						status().isNotFound()
+				);
+	}
 
 }

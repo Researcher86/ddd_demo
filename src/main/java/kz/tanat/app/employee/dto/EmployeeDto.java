@@ -22,29 +22,29 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @ApiModel("Employee")
 public class EmployeeDto {
-    @ApiModelProperty(notes = "Идентификатор сотрудника")
-    private String id;
-    @ApiModelProperty(notes = "Имя сотрудника")
-    private NameDto name;
-    @ApiModelProperty(notes = "Адрес сорудника")
-    private AddressDto address;
-    @ApiModelProperty(notes = "Телефоны сотрудника")
-    private List<PhoneDto> phones;
+	@ApiModelProperty(notes = "Идентификатор сотрудника")
+	private String id;
+	@ApiModelProperty(notes = "Имя сотрудника")
+	private NameDto name;
+	@ApiModelProperty(notes = "Адрес сорудника")
+	private AddressDto address;
+	@ApiModelProperty(notes = "Телефоны сотрудника")
+	private List<PhoneDto> phones;
 
-    public EmployeeDto(Employee employee) {
-        this.id = employee.getId().toString();
-        this.name = new NameDto(employee.getName());
-        this.address = new AddressDto(employee.getAddress());
-        this.phones = employee.getPhones().stream().map(PhoneDto::new).collect(Collectors.toList());
-    }
+	public EmployeeDto(Employee employee) {
+		this.id = employee.getId().toString();
+		this.name = new NameDto(employee.getName());
+		this.address = new AddressDto(employee.getAddress());
+		this.phones = employee.getPhones().stream().map(PhoneDto::new).collect(Collectors.toList());
+	}
 
-    public Employee createEmployee(EmployeeId employeeId) {
-        return new Employee(
-                employeeId,
-                name.createName(),
-                address.createAddress(),
-                phones.stream().map(PhoneDto::createPhone).collect(Collectors.toList())
-        );
-    }
+	public Employee createEmployee(EmployeeId employeeId) {
+		return new Employee(
+				employeeId,
+				name.createName(),
+				address.createAddress(),
+				phones.stream().map(PhoneDto::createPhone).collect(Collectors.toList())
+		);
+	}
 
 }

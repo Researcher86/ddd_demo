@@ -14,37 +14,37 @@ import java.time.LocalDate;
  * @since 07.07.2017.
  */
 public class EmployeePhoneAdded implements DomainEvent {
-    private EmployeeId id;
-    private Phone phone;
-    private int eventVersion;
-    private LocalDate occurredOn;
+	private EmployeeId id;
+	private Phone phone;
+	private int eventVersion;
+	private LocalDate occurredOn;
 
-    private EmployeePhoneAdded() {
-    }
+	private EmployeePhoneAdded() {
+	}
 
-    public EmployeePhoneAdded(EmployeeId id, Phone phone) {
-        this.id = id;
-        this.phone = phone;
+	public EmployeePhoneAdded(EmployeeId id, Phone phone) {
+		this.id = id;
+		this.phone = phone;
 
-        this.eventVersion = 1;
-        this.occurredOn = LocalDate.now();
-    }
+		this.eventVersion = 1;
+		this.occurredOn = LocalDate.now();
+	}
 
-    public EmployeeId getId() {
-        return id;
-    }
+	public EmployeeId getId() {
+		return id;
+	}
 
-    public Phone getPhone() {
-        return phone;
-    }
+	public Phone getPhone() {
+		return phone;
+	}
 
-    @Override
-    public int eventVersion() {
-        return eventVersion;
-    }
+	@Override
+	public int eventVersion() {
+		return eventVersion;
+	}
 
-    @Override
-    public LocalDate occurredOn() {
-        return occurredOn;
-    }
+	@Override
+	public LocalDate occurredOn() {
+		return occurredOn;
+	}
 }

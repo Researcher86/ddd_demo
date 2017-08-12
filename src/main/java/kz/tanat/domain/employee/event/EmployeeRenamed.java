@@ -14,37 +14,37 @@ import java.time.LocalDate;
  * @since 07.07.2017.
  */
 public class EmployeeRenamed implements DomainEvent {
-    private EmployeeId id;
-    private Name name;
-    private int eventVersion;
-    private LocalDate occurredOn;
+	private EmployeeId id;
+	private Name name;
+	private int eventVersion;
+	private LocalDate occurredOn;
 
-    private EmployeeRenamed() {
-    }
+	private EmployeeRenamed() {
+	}
 
-    public EmployeeRenamed(EmployeeId id, Name name) {
-        this.id = id;
-        this.name = name;
+	public EmployeeRenamed(EmployeeId id, Name name) {
+		this.id = id;
+		this.name = name;
 
-        this.eventVersion = 1;
-        this.occurredOn = LocalDate.now();
-    }
+		this.eventVersion = 1;
+		this.occurredOn = LocalDate.now();
+	}
 
-    public EmployeeId getId() {
-        return id;
-    }
+	public EmployeeId getId() {
+		return id;
+	}
 
-    public Name getName() {
-        return name;
-    }
+	public Name getName() {
+		return name;
+	}
 
-    @Override
-    public int eventVersion() {
-        return eventVersion;
-    }
+	@Override
+	public int eventVersion() {
+		return eventVersion;
+	}
 
-    @Override
-    public LocalDate occurredOn() {
-        return occurredOn;
-    }
+	@Override
+	public LocalDate occurredOn() {
+		return occurredOn;
+	}
 }

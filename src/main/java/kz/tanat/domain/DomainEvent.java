@@ -10,7 +10,7 @@ import java.time.LocalDate;
  */
 public interface DomainEvent {
 
-    int eventVersion();
+	int eventVersion();
 
-    LocalDate occurredOn();
+	LocalDate occurredOn();
 }
