@@ -1,13 +1,11 @@
 package kz.tanat.domain.event;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import kz.tanat.domain.DomainEvent;
 
-import javax.persistence.*;
-import java.io.IOException;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.time.LocalDate;
 
 /**
@@ -18,83 +16,66 @@ import java.time.LocalDate;
  */
 @Entity
 public class StoredEvent {
-    @Id
-    @GeneratedValue
-    private Long eventId;
-    private String typeName;
-    private LocalDate occurredOn;
-    @Column(length = 65000)
-    private String eventBody;
+	@Id
+	@GeneratedValue
+	private Long eventId;
+	private String typeName;
+	private LocalDate occurredOn;
+	@Column(length = 65000)
+	private String eventBody;
 
-    @Transient
-    private static final ObjectMapper MAPPER = new ObjectMapper();
+	private StoredEvent() {
+	}
 
-    static {
-        MAPPER.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-        MAPPER.setVisibility(PropertyAccessor.CREATOR, JsonAutoDetect.Visibility.ANY);
-        MAPPER.findAndRegisterModules();
-    }
+	public StoredEvent(DomainEvent domainEvent) {
+		this.typeName = domainEvent.getClass().getName();
+		this.occurredOn = domainEvent.occurredOn();
 
-    private StoredEvent() {
-    }
+		this.eventBody = EventSerializer.serialize(domainEvent);
+	}
 
-    public StoredEvent(DomainEvent domainEvent) {
-        this.typeName = domainEvent.getClass().getName();
-        this.occurredOn = domainEvent.occurredOn();
+	public String eventBody() {
+		return this.eventBody;
+	}
 
-        try {
-            this.eventBody = MAPPER.writeValueAsString(domainEvent);
-        } catch (JsonProcessingException e) {
-            throw new IllegalArgumentException(e);
-        }
-    }
+	public Long eventId() {
+		return this.eventId;
+	}
 
-    public String eventBody() {
-        return this.eventBody;
-    }
+	public LocalDate occurredOn() {
+		return this.occurredOn;
+	}
 
-    public Long eventId() {
-        return this.eventId;
-    }
+	@SuppressWarnings("unchecked")
+	public <T extends DomainEvent> T toDomainEvent() {
+		Class<T> domainEventClass = null;
 
-    public LocalDate occurredOn() {
-        return this.occurredOn;
-    }
+		try {
+			domainEventClass = (Class<T>) Class.forName(this.typeName());
+		} catch (Exception e) {
+			throw new IllegalStateException("Class load error, because: " + e.getMessage());
+		}
 
-    @SuppressWarnings("unchecked")
-    public <T extends DomainEvent> T toDomainEvent() {
-        Class<T> domainEventClass = null;
+		return EventSerializer.deserialize(eventBody, domainEventClass);
+	}
 
-        try {
-            domainEventClass = (Class<T>) Class.forName(this.typeName());
-        } catch (Exception e) {
-            throw new IllegalStateException("Class load error, because: " + e.getMessage());
-        }
+	public String typeName() {
+		return this.typeName;
+	}
 
-        try {
-            return MAPPER.readValue(this.eventBody, domainEventClass);
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
-    public String typeName() {
-        return this.typeName;
-    }
+		StoredEvent that = (StoredEvent) o;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+		return eventId != null ? eventId.equals(that.eventId) : that.eventId == null;
+	}
 
-        StoredEvent that = (StoredEvent) o;
-
-        return eventId != null ? eventId.equals(that.eventId) : that.eventId == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return eventId != null ? eventId.hashCode() : 0;
-    }
+	@Override
+	public int hashCode() {
+		return eventId != null ? eventId.hashCode() : 0;
+	}
 
 }
