@@ -4,14 +4,9 @@ import kz.tanat.app.employee.dto.AddressDto;
 import kz.tanat.app.employee.dto.EmployeeDto;
 import kz.tanat.app.employee.dto.NameDto;
 import kz.tanat.app.employee.dto.PhoneDto;
-import kz.tanat.domain.DomainEvent;
-import kz.tanat.domain.DomainEventPublisher;
-import kz.tanat.domain.DomainEventSubscriber;
 import kz.tanat.domain.employee.Employee;
 import kz.tanat.domain.employee.EmployeeId;
 import kz.tanat.domain.employee.EmployeeRepository;
-import kz.tanat.domain.event.EventRepository;
-import kz.tanat.domain.event.StoredEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -30,26 +25,9 @@ import java.util.stream.Collectors;
 @Service
 public class EmployeeService {
 	private final EmployeeRepository employeeRepository;
-	private final EventRepository eventRepository;
 
-	public EmployeeService(EmployeeRepository employeeRepository, EventRepository eventRepository) {
+	public EmployeeService(EmployeeRepository employeeRepository) {
 		this.employeeRepository = employeeRepository;
-		this.eventRepository = eventRepository;
-
-        DomainEventPublisher.instance().subscribe(new DomainEventSubscriber<DomainEvent>() {
-            @Override
-            public void handleEvent(DomainEvent domainEvent) {
-                log.info("Event: {}", domainEvent.getClass().getSimpleName());
-
-                eventRepository.save(new StoredEvent(domainEvent));
-            }
-        });
-
-//		DomainEventPublisher.instance().subscribe((DomainEventSubscriber<DomainEvent>) domainEvent -> {
-//			log.info("Event: {}", domainEvent.getClass().getSimpleName());
-//
-//			eventRepository.save(new StoredEvent(domainEvent));
-//		});
 	}
 
 	public EmployeeDto get(String employeeId) {
@@ -58,9 +36,7 @@ public class EmployeeService {
 	}
 
 	public List<EmployeeDto> getAll() {
-		return employeeRepository.findAll().stream()
-				.map(EmployeeDto::new)
-				.collect(Collectors.toList());
+		return employeeRepository.findAll().stream().map(EmployeeDto::new).collect(Collectors.toList());
 	}
 
 	public void create(EmployeeDto dto) {

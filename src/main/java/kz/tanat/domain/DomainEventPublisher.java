@@ -1,7 +1,7 @@
 package kz.tanat.domain;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import net.jodah.typetools.TypeResolver;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -77,37 +77,8 @@ public class DomainEventPublisher {
 		if (!this.isPublishing()) {
 			this.ensureSubscribersList();
 
-//            Class<T> aClass = subscriber.getClass().;
-//            System.out.println(aClass.getSimpleName());
-
-//            try {
-//                Type type = subscriber.getClass().getGenericInterfaces()[0];
-//                Type generic = ((ParameterizedType) type).getActualTypeArguments()[0];
-//                Class<DomainEvent> clazz = (Class<DomainEvent>) Class.forName(generic.getTypeName());
-//                this.subscribers().add(new Subscriber(subscriber, clazz));
-//            } catch (ClassNotFoundException e) {
-//                throw new RuntimeException(e);
-//            }
-
-
-			Type[] genericInterfaces = subscriber.getClass().getGenericInterfaces();
-			for (Type genericInterface : genericInterfaces) {
-				if (genericInterface instanceof ParameterizedType) {
-					Type[] genericTypes = ((ParameterizedType) genericInterface).getActualTypeArguments();
-					for (Type genericType : genericTypes) {
-						System.out.println("Generic type: " + genericType);
-					}
-				}
-			}
-
-			Class<T> thisClass = null;
-			Type type = getClass().getGenericSuperclass();
-			if (type instanceof ParameterizedType) {
-				ParameterizedType parameterizedType = (ParameterizedType) type;
-				Type[] typeArguments = parameterizedType.getActualTypeArguments();
-				thisClass = (Class<T>) typeArguments[0];
-				System.out.println("Generic type: " + thisClass);
-			}
+			Class<DomainEvent> clazz = (Class<DomainEvent>) TypeResolver.resolveRawArguments(DomainEventSubscriber.class, subscriber.getClass())[0];
+			this.subscribers().add(new Subscriber(subscriber, clazz));
 		}
 	}
 

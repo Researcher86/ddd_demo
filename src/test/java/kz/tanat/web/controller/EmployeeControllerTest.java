@@ -6,11 +6,14 @@ import kz.tanat.app.employee.dto.EmployeeDto;
 import kz.tanat.domain.employee.EmployeeBuilder;
 import kz.tanat.domain.employee.EmployeeRepository;
 import kz.tanat.domain.event.EventRepository;
+import kz.tanat.web.helper.EmployeeFullName;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -43,6 +46,16 @@ public class EmployeeControllerTest {
 	private MockMvc mockMvc;
 
 	private ObjectMapper mapper = new ObjectMapper();
+
+	@TestConfiguration
+	static class Config {
+
+		@Bean
+		public EmployeeFullName employeeFullName() {
+			return new EmployeeFullName();
+		}
+
+	}
 
 	@Test
 	public void list() throws Exception {

@@ -10,7 +10,6 @@ import kz.tanat.domain.employee.EmployeeId;
 import kz.tanat.domain.employee.EmployeeRepository;
 import kz.tanat.domain.employee.event.EmployeeArchived;
 import kz.tanat.domain.employee.event.EmployeeReinstated;
-import kz.tanat.domain.event.EventRepository;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -46,9 +45,6 @@ public class EmployeeServiceTest {
 	@Mock
 	private EmployeeRepository employeeRepository;
 
-	@Mock
-	private EventRepository eventRepository;
-
 //    @Mock
 //    private StoredEvent storedEvent;
 
@@ -72,7 +68,7 @@ public class EmployeeServiceTest {
 //        when(eventStore.save(any(StoredEvent.class))).thenReturn(storedEvent);
 //        given(eventStore.save(any(StoredEvent.class))).willReturn(storedEvent);
 
-		service = new EmployeeService(employeeRepository, eventRepository);
+		service = new EmployeeService(employeeRepository);
 		eventTracking = new EventTracking();
 	}
 
