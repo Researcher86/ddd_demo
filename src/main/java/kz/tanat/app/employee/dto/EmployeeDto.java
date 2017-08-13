@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -40,7 +41,7 @@ public class EmployeeDto {
 
 	public Employee createEmployee(EmployeeId employeeId) {
 		return new Employee(
-				employeeId,
+				id == null ? employeeId : new EmployeeId(UUID.fromString(id)),
 				name.createName(),
 				address.createAddress(),
 				phones.stream().map(PhoneDto::createPhone).collect(Collectors.toList())

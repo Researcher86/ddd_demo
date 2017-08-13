@@ -32,7 +32,7 @@ public class Employee extends AbstractEntity {
 	@ElementCollection(fetch = FetchType.EAGER)
 	private List<Status> status = new ArrayList<>();
 
-	private Employee() {
+	protected Employee() {
 	}
 
 	public Employee(EmployeeId id, Name name, Address address, List<Phone> phones) {

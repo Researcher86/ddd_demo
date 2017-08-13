@@ -50,7 +50,7 @@ public class EmployeeServiceTest {
 
 	private EmployeeService service;
 
-	private UUID uuidId = new UUID(0L, 1L);
+	private UUID uuidId = new UUID(0, 1);
 	private String stringId = uuidId.toString();
 	private NameDto name = new NameDto("Пупкин", "Василий", "Петрович");
 	private AddressDto address = new AddressDto("Россия", "Липецкая обл.", "г. Пушкин", "ул. Ленина", "25");

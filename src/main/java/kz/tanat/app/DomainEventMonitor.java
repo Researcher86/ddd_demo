@@ -34,7 +34,7 @@ public class DomainEventMonitor {
 		DomainEventPublisher.instance().subscribe((DomainEventSubscriber<DomainEvent>) domainEvent -> {
 			StoredEvent storedEvent = new StoredEvent(domainEvent);
 
-			log.info("Event: {}", storedEvent.eventBody());
+			log.info("Event '{}': {}", domainEvent.getClass().getSimpleName(), storedEvent.eventBody());
 
 			eventRepository.save(storedEvent);
 		});

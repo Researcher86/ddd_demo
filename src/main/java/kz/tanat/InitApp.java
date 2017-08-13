@@ -26,21 +26,24 @@ public class InitApp implements CommandLineRunner {
 	@Override
 	public void run(String... strings) throws Exception {
 		employeeService.create(new EmployeeDto(
-				new UUID(0L, 1L).toString(),
+				new UUID(0, 1).toString(),
 				new NameDto("Пупкин", "Василий", "Петрович"),
 				new AddressDto("Россия", "Липецкая обл.", "г. Пушкин", "ул. Ленина", "25"),
-				Arrays.asList(new PhoneDto(7, "000", "00000000"))
+				Arrays.asList(
+						new PhoneDto(7, "000", "00000000"),
+						new PhoneDto(7, "000", "00000001")
+				)
 		));
 
 		employeeService.create(new EmployeeDto(
-				new UUID(0L, 2L).toString(),
+				new UUID(0, 2).toString(),
 				new NameDto("Пупкин 2", "Василий", "Петрович"),
 				new AddressDto("Россия", "Липецкая обл.", "г. Пушкин", "ул. Ленина", "25"),
 				Arrays.asList(new PhoneDto(7, "000", "00000000"))
 		));
 
 		employeeService.create(new EmployeeDto(
-				new UUID(0L, 3L).toString(),
+				new UUID(0, 3).toString(),
 				new NameDto("Пупкин 3", "Василий", "Петрович"),
 				new AddressDto("Россия", "Липецкая обл.", "г. Пушкин", "ул. Ленина", "25"),
 				Arrays.asList(new PhoneDto(7, "000", "00000000"))

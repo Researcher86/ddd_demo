@@ -12,12 +12,15 @@ import java.util.UUID;
  * @since 07.07.2017.
  */
 public class EmployeeBuilder {
-	private UUID id = new UUID(0L, 1L);
+	private UUID id = new UUID(0, 1);
 	private List<Phone> phones;
 	private boolean archived = false;
 
 	private EmployeeBuilder() {
-		phones = Arrays.asList(new Phone(7, "000", "00000000"));
+		phones = Arrays.asList(
+				new Phone(7, "000", "00000000"),
+				new Phone(7, "000", "00000001")
+		);
 	}
 
 	public static EmployeeBuilder instance() {
