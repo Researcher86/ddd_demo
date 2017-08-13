@@ -2,7 +2,6 @@ package kz.tanat.app;
 
 import kz.tanat.domain.DomainEvent;
 import kz.tanat.domain.DomainEventPublisher;
-import kz.tanat.domain.DomainEventSubscriber;
 import kz.tanat.domain.event.EventRepository;
 import kz.tanat.domain.event.StoredEvent;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +30,7 @@ public class DomainEventMonitor {
 	public Object webServiceMethod(ProceedingJoinPoint joinPoint) throws Throwable {
 		DomainEventPublisher.instance().reset();
 
-		DomainEventPublisher.instance().subscribe((DomainEventSubscriber<DomainEvent>) domainEvent -> {
+		DomainEventPublisher.instance().subscribe((DomainEvent domainEvent) -> {
 			StoredEvent storedEvent = new StoredEvent(domainEvent);
 
 			log.info("Event '{}': {}", domainEvent.getClass().getSimpleName(), storedEvent.eventBody());

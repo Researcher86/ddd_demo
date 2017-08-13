@@ -22,9 +22,7 @@ import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.core.IsEqual.equalTo;
 
@@ -50,8 +48,8 @@ public class ApplicationTests {
 	public void getAll() throws Exception {
 		ResponseEntity<EmployeeDto[]> response = template.getForEntity("/api/employees", EmployeeDto[].class);
 
-        assertThat(response.getStatusCodeValue(), equalTo(200));
-        assertThat(Arrays.asList(response.getBody()), is(not(empty())));
+		assertThat(response.getStatusCodeValue(), equalTo(200));
+		assertThat(Arrays.asList(response.getBody()), is(not(empty())));
 	}
 
 	@Test
@@ -60,8 +58,8 @@ public class ApplicationTests {
 
 		ResponseEntity<EmployeeDto> response = template.getForEntity("/api/employees/{id}", EmployeeDto.class, employeeDto.getId());
 
-        assertThat(response.getStatusCodeValue(), equalTo(200));
-        assertThat(response.getBody().getName(), equalTo(employeeDto.getName()));
+		assertThat(response.getStatusCodeValue(), equalTo(200));
+		assertThat(response.getBody().getName(), equalTo(employeeDto.getName()));
 	}
 
 	@Test
@@ -94,7 +92,7 @@ public class ApplicationTests {
 
 		NameDto storedName = employeeService.get(employee.getId().toString()).getName();
 
-        assertThat(response.getStatusCodeValue(), equalTo(200));
+		assertThat(response.getStatusCodeValue(), equalTo(200));
 		assertThat(storedName, equalTo(nameDto));
 	}
 
@@ -108,7 +106,7 @@ public class ApplicationTests {
 
 		AddressDto storedAddress = employeeService.get(employee.getId().toString()).getAddress();
 
-        assertThat(response.getStatusCodeValue(), equalTo(200));
+		assertThat(response.getStatusCodeValue(), equalTo(200));
 		assertThat(storedAddress, equalTo(addressDto));
 	}
 
@@ -123,7 +121,7 @@ public class ApplicationTests {
 		List<PhoneDto> phones = employeeService.get(employee.getId().toString()).getPhones();
 		PhoneDto storedPhone = phones.get(phones.size() - 1);
 
-        assertThat(response.getStatusCodeValue(), equalTo(200));
+		assertThat(response.getStatusCodeValue(), equalTo(200));
 		assertThat(storedPhone, equalTo(phoneDto));
 	}
 
@@ -143,7 +141,7 @@ public class ApplicationTests {
 		ResponseEntity<Void> response = template.postForEntity("/api/employees/{id}/archive", null, Void.class, employeeId.toString());
 
 		Employee employee = employeeRepository.getOne(new EmployeeId(employeeId));
-        assertThat(response.getStatusCodeValue(), equalTo(200));
+		assertThat(response.getStatusCodeValue(), equalTo(200));
 		assertThat(employee.getCurrentStatus(), equalTo(new Status(Status.State.ARCHIVED, LocalDate.now())));
 	}
 
@@ -156,7 +154,7 @@ public class ApplicationTests {
 		ResponseEntity<Void> response = template.postForEntity("/api/employees/{id}/reinstate", null, Void.class, employeeId.toString());
 
 		Employee employee = employeeRepository.getOne(new EmployeeId(employeeId));
-        assertThat(response.getStatusCodeValue(), equalTo(200));
+		assertThat(response.getStatusCodeValue(), equalTo(200));
 		assertThat(employee.getCurrentStatus(), equalTo(new Status(Status.State.ACTIVE, LocalDate.now())));
 	}
 

@@ -15,7 +15,7 @@ public class EventTracking {
 	private List<DomainEvent> events = new ArrayList<>();
 
 	public EventTracking() {
-		DomainEventPublisher.instance().subscribe((DomainEventSubscriber<DomainEvent>) domainEvent -> {
+		DomainEventPublisher.instance().subscribe((DomainEvent domainEvent) -> {
 			handledEvents.add(domainEvent.getClass());
 			events.add(domainEvent);
 		});

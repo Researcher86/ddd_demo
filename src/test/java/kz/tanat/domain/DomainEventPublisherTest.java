@@ -21,7 +21,7 @@ public class DomainEventPublisherTest {
 	public void testDomainEventPublisherPublish() throws Exception {
 		DomainEventPublisher.instance().reset();
 
-		DomainEventPublisher.instance().subscribe((DomainEventSubscriber<TestableDomainEvent>) domainEvent -> {
+		DomainEventPublisher.instance().subscribe((TestableDomainEvent domainEvent) -> {
 			Assert.assertEquals(100L, domainEvent.getId());
 			Assert.assertEquals("test", domainEvent.getName());
 			eventHandled = true;
@@ -38,7 +38,7 @@ public class DomainEventPublisherTest {
 	public void testDomainEventPublisherBlocked() throws Exception {
 		DomainEventPublisher.instance().reset();
 
-		DomainEventPublisher.instance().subscribe((DomainEventSubscriber<TestableDomainEvent>) domainEvent -> {
+		DomainEventPublisher.instance().subscribe((TestableDomainEvent domainEvent) -> {
 			Assert.assertEquals(100L, domainEvent.getId());
 			Assert.assertEquals("test", domainEvent.getName());
 			eventHandled = true;
@@ -46,7 +46,7 @@ public class DomainEventPublisherTest {
 			DomainEventPublisher.instance().publish(new AnotherTestableDomainEvent(1000.0));
 		});
 
-		DomainEventPublisher.instance().subscribe((DomainEventSubscriber<AnotherTestableDomainEvent>) domainEvent -> {
+		DomainEventPublisher.instance().subscribe((AnotherTestableDomainEvent domainEvent) -> {
 			// should never be reached due to blocked publisher
 			Assert.assertEquals(1000.0, domainEvent.getValue(), 0.001);
 			anotherEventHandled = true;
