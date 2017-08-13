@@ -121,7 +121,7 @@ public class ApiEmployeeController {
 	}
 
 	@PostMapping("/{id}/reinstate")
-	@ApiOperation(value = "Восстановить информацию о сотруднике их архива")
+	@ApiOperation(value = "Восстановить информацию о сотруднике из архива")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Успешно"),
 			@ApiResponse(code = 404, message = "Ресурс не найден")
