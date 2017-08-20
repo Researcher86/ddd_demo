@@ -19,46 +19,46 @@ import java.util.List;
  */
 @Embeddable
 class Phones {
-	@ElementCollection(fetch = FetchType.EAGER)
-	@Fetch(value = FetchMode.SUBSELECT)
-	private List<Phone> phones = new ArrayList<>();
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<Phone> phones = new ArrayList<>();
 
-	private Phones() {
-	}
+    private Phones() {
+    }
 
-	Phones(List<Phone> phones) {
-		if (phones == null || phones.isEmpty()) {
-			throw new DomainException("Employee must contain at least one phone.");
-		}
+    Phones(List<Phone> phones) {
+        if (phones == null || phones.isEmpty()) {
+            throw new DomainException("Employee must contain at least one phone.");
+        }
 
-		phones.forEach(this::add);
-	}
+        phones.forEach(this::add);
+    }
 
-	void add(Phone phone) {
-		if (phones.stream().anyMatch(p -> p.equals(phone))) {
-			throw new DomainException("Phone already exists.");
-		}
+    void add(Phone phone) {
+        if (phones.stream().anyMatch(p -> p.equals(phone))) {
+            throw new DomainException("Phone already exists.");
+        }
 
-		phones.add(phone);
-	}
+        phones.add(phone);
+    }
 
-	Phone remove(int index) {
-		if (index > phones.size()) {
-			throw new DomainException("Phone not found.");
-		}
+    Phone remove(int index) {
+        if (index > phones.size()) {
+            throw new DomainException("Phone not found.");
+        }
 
-		if (phones.size() == 1) {
-			throw new DomainException("Cannot remove the last phone.");
-		}
+        if (phones.size() == 1) {
+            throw new DomainException("Cannot remove the last phone.");
+        }
 
-		return phones.remove(index);
-	}
+        return phones.remove(index);
+    }
 
-	boolean contains(Phone phone) {
-		return phones.contains(phone);
-	}
+    boolean contains(Phone phone) {
+        return phones.contains(phone);
+    }
 
-	List<Phone> getAll() {
-		return Collections.unmodifiableList(phones);
-	}
+    List<Phone> getAll() {
+        return Collections.unmodifiableList(phones);
+    }
 }

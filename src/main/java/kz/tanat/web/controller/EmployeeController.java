@@ -20,25 +20,25 @@ import java.util.HashMap;
 @RequestMapping("/employees")
 public class EmployeeController {
 
-	private final EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
-	public EmployeeController(EmployeeService employeeService) {
-		this.employeeService = employeeService;
-	}
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
-	@GetMapping
-	public ModelAndView list() {
-		return new ModelAndView("employee/list", "employees", employeeService.getAll());
-	}
+    @GetMapping
+    public ModelAndView list() {
+        return new ModelAndView("employee/list", "employees", employeeService.getAll());
+    }
 
-	@GetMapping("/{id}")
-	public ModelAndView show(@PathVariable String id) {
-		try {
-			return new ModelAndView("employee/show", "employee", employeeService.get(id));
-		} catch (IllegalArgumentException e) {
-			return new ModelAndView("error/404", new HashMap<String, String>() {{
-				put("error", e.getMessage());
-			}}, HttpStatus.NOT_FOUND);
-		}
-	}
+    @GetMapping("/{id}")
+    public ModelAndView show(@PathVariable String id) {
+        try {
+            return new ModelAndView("employee/show", "employee", employeeService.get(id));
+        } catch (IllegalArgumentException e) {
+            return new ModelAndView("error/404", new HashMap<String, String>() {{
+                put("error", e.getMessage());
+            }}, HttpStatus.NOT_FOUND);
+        }
+    }
 }

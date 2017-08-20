@@ -8,5 +8,5 @@ package kz.tanat.domain;
  */
 public interface DomainEventSubscriber<T> {
 
-	void handleEvent(final T domainEvent);
+    void handleEvent(final T domainEvent);
 }

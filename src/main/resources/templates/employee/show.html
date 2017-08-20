@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8"/>
-	<title>Employee details</title>
+    <meta charset="UTF-8"/>
+    <title>Employee details</title>
 </head>
 <body>
 <table>
-	<tr>
-		<td style="font-weight: bold">Full Name:</td>
-		<td th:text="${@employeeFullName.get(employee)}"></td>
-	</tr>
-	<tr>
-		<td style="font-weight: bold">Name:</td>
-		<td th:text="${employee.name}"></td>
-	</tr>
-	<tr>
-		<td style="font-weight: bold">Address:</td>
-		<td th:text="${employee.address}"></td>
-	</tr>
-	<tr>
-		<td style="font-weight: bold">Phones:</td>
-		<td th:text="${employee.phones}"></td>
-	</tr>
+    <tr>
+        <td style="font-weight: bold">Full Name:</td>
+        <td th:text="${@employeeFullName.get(employee)}"></td>
+    </tr>
+    <tr>
+        <td style="font-weight: bold">Name:</td>
+        <td th:text="${employee.name}"></td>
+    </tr>
+    <tr>
+        <td style="font-weight: bold">Address:</td>
+        <td th:text="${employee.address}"></td>
+    </tr>
+    <tr>
+        <td style="font-weight: bold">Phones:</td>
+        <td th:text="${employee.phones}"></td>
+    </tr>
 </table>
 </body>
 </html>

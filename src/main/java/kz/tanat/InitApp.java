@@ -20,33 +20,33 @@ import java.util.UUID;
  */
 @Component
 public class InitApp implements CommandLineRunner {
-	@Autowired
-	private EmployeeService employeeService;
+    @Autowired
+    private EmployeeService employeeService;
 
-	@Override
-	public void run(String... strings) throws Exception {
-		employeeService.create(new EmployeeDto(
-				new UUID(0, 1).toString(),
-				new NameDto("Пупкин", "Василий", "Петрович"),
-				new AddressDto("Россия", "Липецкая обл.", "г. Пушкин", "ул. Ленина", "25"),
-				Arrays.asList(
-						new PhoneDto(7, "000", "00000000"),
-						new PhoneDto(7, "000", "00000001")
-				)
-		));
+    @Override
+    public void run(String... strings) throws Exception {
+        employeeService.create(new EmployeeDto(
+                new UUID(0, 1).toString(),
+                new NameDto("Пупкин", "Василий", "Петрович"),
+                new AddressDto("Россия", "Липецкая обл.", "г. Пушкин", "ул. Ленина", "25"),
+                Arrays.asList(
+                        new PhoneDto(7, "000", "00000000"),
+                        new PhoneDto(7, "000", "00000001")
+                )
+        ));
 
-		employeeService.create(new EmployeeDto(
-				new UUID(0, 2).toString(),
-				new NameDto("Пупкин 2", "Василий", "Петрович"),
-				new AddressDto("Россия", "Липецкая обл.", "г. Пушкин", "ул. Ленина", "25"),
-				Arrays.asList(new PhoneDto(7, "000", "00000000"))
-		));
+        employeeService.create(new EmployeeDto(
+                new UUID(0, 2).toString(),
+                new NameDto("Пупкин 2", "Василий", "Петрович"),
+                new AddressDto("Россия", "Липецкая обл.", "г. Пушкин", "ул. Ленина", "25"),
+                Arrays.asList(new PhoneDto(7, "000", "00000000"))
+        ));
 
-		employeeService.create(new EmployeeDto(
-				new UUID(0, 3).toString(),
-				new NameDto("Пупкин 3", "Василий", "Петрович"),
-				new AddressDto("Россия", "Липецкая обл.", "г. Пушкин", "ул. Ленина", "25"),
-				Arrays.asList(new PhoneDto(7, "000", "00000000"))
-		));
-	}
+        employeeService.create(new EmployeeDto(
+                new UUID(0, 3).toString(),
+                new NameDto("Пупкин 3", "Василий", "Петрович"),
+                new AddressDto("Россия", "Липецкая обл.", "г. Пушкин", "ул. Ленина", "25"),
+                Arrays.asList(new PhoneDto(7, "000", "00000000"))
+        ));
+    }
 }

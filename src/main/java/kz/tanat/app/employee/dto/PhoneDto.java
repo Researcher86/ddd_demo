@@ -18,20 +18,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @ApiModel("Phone")
 public class PhoneDto {
-	@ApiModelProperty(notes = "Страна")
-	private int country;
-	@ApiModelProperty(notes = "Код")
-	private String code;
-	@ApiModelProperty(notes = "Номер")
-	private String number;
+    @ApiModelProperty(notes = "Страна")
+    private int country;
+    @ApiModelProperty(notes = "Код")
+    private String code;
+    @ApiModelProperty(notes = "Номер")
+    private String number;
 
-	public PhoneDto(Phone phone) {
-		this.country = phone.getCountry();
-		this.code = phone.getCode();
-		this.number = phone.getNumber();
-	}
+    public PhoneDto(Phone phone) {
+        this.country = phone.getCountry();
+        this.code = phone.getCode();
+        this.number = phone.getNumber();
+    }
 
-	public Phone createPhone() {
-		return new Phone(country, code, number);
-	}
+    public Phone createPhone() {
+        return new Phone(country, code, number);
+    }
 }

@@ -18,20 +18,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @ApiModel("Name")
 public class NameDto {
-	@ApiModelProperty(notes = "Фамилия")
-	private String last;
-	@ApiModelProperty(notes = "Имя")
-	private String first;
-	@ApiModelProperty(notes = "Отчество")
-	private String middle;
+    @ApiModelProperty(notes = "Фамилия")
+    private String last;
+    @ApiModelProperty(notes = "Имя")
+    private String first;
+    @ApiModelProperty(notes = "Отчество")
+    private String middle;
 
-	public NameDto(Name name) {
-		this.last = name.getLast();
-		this.first = name.getFirst();
-		this.middle = name.getMiddle();
-	}
+    public NameDto(Name name) {
+        this.last = name.getLast();
+        this.first = name.getFirst();
+        this.middle = name.getMiddle();
+    }
 
-	public Name createName() {
-		return new Name(last, first, middle);
-	}
+    public Name createName() {
+        return new Name(last, first, middle);
+    }
 }

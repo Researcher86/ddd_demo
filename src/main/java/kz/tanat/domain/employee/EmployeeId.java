@@ -13,10 +13,10 @@ import java.util.UUID;
  */
 @Embeddable
 public class EmployeeId extends AbstractId {
-	private EmployeeId() {
-	}
+    private EmployeeId() {
+    }
 
-	public EmployeeId(UUID id) {
-		super(id);
-	}
+    public EmployeeId(UUID id) {
+        super(id);
+    }
 }

@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
-	@ExceptionHandler(IllegalArgumentException.class)
-	@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Not found")
-	public void exceptionHandler404(IllegalArgumentException e) {
-		log.error("REST api exception", e);
-	}
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Not found")
+    public void exceptionHandler404(IllegalArgumentException e) {
+        log.error("REST api exception", e);
+    }
 }

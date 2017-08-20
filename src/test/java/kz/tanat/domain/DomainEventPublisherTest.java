@@ -14,50 +14,50 @@ import static org.junit.Assert.assertTrue;
  */
 public class DomainEventPublisherTest {
 
-	private boolean anotherEventHandled;
-	private boolean eventHandled;
+    private boolean anotherEventHandled;
+    private boolean eventHandled;
 
-	@Test
-	public void testDomainEventPublisherPublish() throws Exception {
-		DomainEventPublisher.instance().reset();
+    @Test
+    public void testDomainEventPublisherPublish() throws Exception {
+        DomainEventPublisher.instance().reset();
 
-		DomainEventPublisher.instance().subscribe((TestableDomainEvent domainEvent) -> {
-			Assert.assertEquals(100L, domainEvent.getId());
-			Assert.assertEquals("test", domainEvent.getName());
-			eventHandled = true;
-		});
+        DomainEventPublisher.instance().subscribe((TestableDomainEvent domainEvent) -> {
+            Assert.assertEquals(100L, domainEvent.getId());
+            Assert.assertEquals("test", domainEvent.getName());
+            eventHandled = true;
+        });
 
-		assertFalse(this.eventHandled);
+        assertFalse(this.eventHandled);
 
-		DomainEventPublisher.instance().publish(new TestableDomainEvent(100L, "test"));
+        DomainEventPublisher.instance().publish(new TestableDomainEvent(100L, "test"));
 
-		assertTrue(this.eventHandled);
-	}
+        assertTrue(this.eventHandled);
+    }
 
-	@Test
-	public void testDomainEventPublisherBlocked() throws Exception {
-		DomainEventPublisher.instance().reset();
+    @Test
+    public void testDomainEventPublisherBlocked() throws Exception {
+        DomainEventPublisher.instance().reset();
 
-		DomainEventPublisher.instance().subscribe((TestableDomainEvent domainEvent) -> {
-			Assert.assertEquals(100L, domainEvent.getId());
-			Assert.assertEquals("test", domainEvent.getName());
-			eventHandled = true;
-			// attempt nested publish, which should not work
-			DomainEventPublisher.instance().publish(new AnotherTestableDomainEvent(1000.0));
-		});
+        DomainEventPublisher.instance().subscribe((TestableDomainEvent domainEvent) -> {
+            Assert.assertEquals(100L, domainEvent.getId());
+            Assert.assertEquals("test", domainEvent.getName());
+            eventHandled = true;
+            // attempt nested publish, which should not work
+            DomainEventPublisher.instance().publish(new AnotherTestableDomainEvent(1000.0));
+        });
 
-		DomainEventPublisher.instance().subscribe((AnotherTestableDomainEvent domainEvent) -> {
-			// should never be reached due to blocked publisher
-			Assert.assertEquals(1000.0, domainEvent.getValue(), 0.001);
-			anotherEventHandled = true;
-		});
+        DomainEventPublisher.instance().subscribe((AnotherTestableDomainEvent domainEvent) -> {
+            // should never be reached due to blocked publisher
+            Assert.assertEquals(1000.0, domainEvent.getValue(), 0.001);
+            anotherEventHandled = true;
+        });
 
-		assertFalse(this.eventHandled);
-		assertFalse(this.anotherEventHandled);
+        assertFalse(this.eventHandled);
+        assertFalse(this.anotherEventHandled);
 
-		DomainEventPublisher.instance().publish(new TestableDomainEvent(100L, "test"));
+        DomainEventPublisher.instance().publish(new TestableDomainEvent(100L, "test"));
 
-		assertTrue(this.eventHandled);
-		assertFalse(this.anotherEventHandled);
-	}
+        assertTrue(this.eventHandled);
+        assertFalse(this.anotherEventHandled);
+    }
 }

@@ -14,19 +14,19 @@ import java.time.LocalDate;
  */
 @MappedSuperclass
 public abstract class AbstractEntity {
-	@Version
-	private Integer version;
+    @Version
+    private Integer version;
 
-	private LocalDate createdAt;
-	private LocalDate updatedAt;
+    private LocalDate createdAt;
+    private LocalDate updatedAt;
 
-	@PrePersist
-	public void beforePersist() {
-		createdAt = LocalDate.now();
-	}
+    @PrePersist
+    public void beforePersist() {
+        createdAt = LocalDate.now();
+    }
 
-	@PreUpdate
-	public void beforeUpdate() {
-		updatedAt = LocalDate.now();
-	}
+    @PreUpdate
+    public void beforeUpdate() {
+        updatedAt = LocalDate.now();
+    }
 }

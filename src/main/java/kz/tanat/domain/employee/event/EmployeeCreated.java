@@ -13,30 +13,30 @@ import java.time.LocalDate;
  * @since 07.07.2017.
  */
 public class EmployeeCreated implements DomainEvent {
-	private EmployeeId id;
-	private int eventVersion;
-	private LocalDate occurredOn;
+    private EmployeeId id;
+    private int eventVersion;
+    private LocalDate occurredOn;
 
-	private EmployeeCreated() {
-	}
+    private EmployeeCreated() {
+    }
 
-	public EmployeeCreated(EmployeeId id) {
-		this.id = id;
-		this.eventVersion = 1;
-		this.occurredOn = LocalDate.now();
-	}
+    public EmployeeCreated(EmployeeId id) {
+        this.id = id;
+        this.eventVersion = 1;
+        this.occurredOn = LocalDate.now();
+    }
 
-	public EmployeeId getId() {
-		return id;
-	}
+    public EmployeeId getId() {
+        return id;
+    }
 
-	@Override
-	public int eventVersion() {
-		return eventVersion;
-	}
+    @Override
+    public int eventVersion() {
+        return eventVersion;
+    }
 
-	@Override
-	public LocalDate occurredOn() {
-		return occurredOn;
-	}
+    @Override
+    public LocalDate occurredOn() {
+        return occurredOn;
+    }
 }
