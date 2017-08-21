@@ -1,17 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
 <head>
-    <meta charset="UTF-8"/>
     <title>Employees</title>
+    <link th:if="false" rel="stylesheet" href="/webjars/bootstrap/4.0.0-beta/css/bootstrap.min.css"/>
 </head>
 <body>
-<table>
-    <tr th:each="employee, iter : ${employees}">
-        <td>Name: <span th:text="${iter.index + 1}"></span></td>
-        <td th:text="${employee.name}"></td>
-        <td th:text="${employee.address}"></td>
-        <td th:text="${employee.phones}"></td>
-    </tr>
-</table>
+<div layout:fragment="content" class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered">
+            <tr th:each="employee, iter : ${employees}">
+                <td>Name: <span th:text="${iter.index + 1}"></span></td>
+                <td th:text="${employee.name}"></td>
+                <td th:text="${employee.address}"></td>
+                <td th:text="${employee.phones}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<th:block layout:fragment="scripts">
+    <script src="/js/app.js"></script>
+</th:block>
 </body>
 </html>
