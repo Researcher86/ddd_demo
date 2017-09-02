@@ -1,5 +1,7 @@
 package kz.tanat.domain.employee;
 
+import lombok.NonNull;
+
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -26,10 +28,7 @@ public class Status {
     private Status() {
     }
 
-    public Status(State value, LocalDate date) {
-        Objects.nonNull(value);
-        Objects.nonNull(date);
-
+    public Status(@NonNull State value, @NonNull LocalDate date) {
         this.value = value;
         this.date = date;
     }

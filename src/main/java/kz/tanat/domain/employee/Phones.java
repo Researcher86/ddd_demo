@@ -1,6 +1,7 @@
 package kz.tanat.domain.employee;
 
 import kz.tanat.domain.DomainException;
+import lombok.NonNull;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -26,8 +27,8 @@ class Phones {
     private Phones() {
     }
 
-    Phones(List<Phone> phones) {
-        if (phones == null || phones.isEmpty()) {
+    Phones(@NonNull List<Phone> phones) {
+        if (phones.isEmpty()) {
             throw new DomainException("Employee must contain at least one phone.");
         }
 

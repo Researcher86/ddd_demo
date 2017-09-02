@@ -1,5 +1,7 @@
 package kz.tanat.domain.employee;
 
+import lombok.NonNull;
+
 import javax.persistence.Embeddable;
 import java.util.Objects;
 
@@ -20,10 +22,7 @@ public class Address {
     private Address() {
     }
 
-    public Address(String country, String region, String city, String street, String house) {
-        Objects.nonNull(country);
-        Objects.nonNull(city);
-
+    public Address(@NonNull String country, String region, @NonNull String city, String street, String house) {
         this.country = country;
         this.region = region;
         this.city = city;

@@ -1,5 +1,7 @@
 package kz.tanat.domain.employee;
 
+import lombok.NonNull;
+
 import javax.persistence.Embeddable;
 import java.util.Objects;
 
@@ -18,11 +20,7 @@ public class Phone {
     private Phone() {
     }
 
-    public Phone(int country, String code, String number) {
-        Objects.nonNull(country);
-        Objects.nonNull(code);
-        Objects.nonNull(number);
-
+    public Phone(int country, @NonNull String code, @NonNull String number) {
         this.country = country;
         this.code = code;
         this.number = number;

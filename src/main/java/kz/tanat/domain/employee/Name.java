@@ -1,5 +1,7 @@
 package kz.tanat.domain.employee;
 
+import lombok.NonNull;
+
 import javax.persistence.Embeddable;
 import java.util.Objects;
 
@@ -18,10 +20,7 @@ public class Name {
     private Name() {
     }
 
-    public Name(String last, String first, String middle) {
-        Objects.nonNull(last);
-        Objects.nonNull(first);
-
+    public Name(@NonNull String last, @NonNull String first, String middle) {
         this.last = last;
         this.first = first;
         this.middle = middle;
