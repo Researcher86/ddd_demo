@@ -19,15 +19,15 @@ import java.util.List;
  * @since 07.07.2017.
  */
 @Embeddable
-class Phones {
+class PhoneList {
     @ElementCollection(fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Phone> phones = new ArrayList<>();
 
-    private Phones() {
+    private PhoneList() {
     }
 
-    Phones(@NonNull List<Phone> phones) {
+    PhoneList(@NonNull List<Phone> phones) {
         if (phones.isEmpty()) {
             throw new DomainException("Employee must contain at least one phone.");
         }
