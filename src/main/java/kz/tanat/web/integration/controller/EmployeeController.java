@@ -1,4 +1,4 @@
-package kz.tanat.web.controller;
+package kz.tanat.web.integration.controller;
 
 import kz.tanat.app.employee.EmployeeService;
 import org.springframework.stereotype.Controller;

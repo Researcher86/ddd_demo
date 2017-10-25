@@ -1,4 +1,4 @@
-package kz.tanat.web.api;
+package kz.tanat.web.integration.api;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

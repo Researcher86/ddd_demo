@@ -1,4 +1,4 @@
-package kz.tanat;
+package kz.tanat.web.system;
 
 import kz.tanat.app.employee.EmployeeService;
 import kz.tanat.app.employee.dto.AddressDto;
