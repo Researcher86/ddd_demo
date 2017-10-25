@@ -26,7 +26,7 @@ public class Employee extends AbstractEntity {
     @Embedded
     private Address address;
     @Embedded
-    private Phones phones;
+    private PhoneList phones;
     private LocalDate createDate;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -39,7 +39,7 @@ public class Employee extends AbstractEntity {
         this.id = id;
         this.name = name;
         this.address = address;
-        this.phones = new Phones(phones);
+        this.phones = new PhoneList(phones);
         this.createDate = LocalDate.now();
         this.status.add(new Status(Status.State.ACTIVE, createDate));
 
