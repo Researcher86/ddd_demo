@@ -6,11 +6,13 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.UUID;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.*;
@@ -32,17 +34,20 @@ public class EmployeeRepositoryTest {
     public ExpectedException expectedEx = ExpectedException.none();
 
     @Test
+    @Sql("/sql/insert-employees.sql")
     public void get() throws Exception {
-        Employee employee = EmployeeBuilder.instance().build();
-        repository.save(employee);
+        EmployeeId employeeId = new EmployeeId(UUID.fromString("5c95ef64-1e86-4f3c-b8fe-9b045b480169"));
 
-        Employee found = repository.getOne(employee.getId());
+        Employee found = repository.getOne(employeeId);
 
         assertNotNull(found);
-        assertEquals(employee.getId(), found.getId());
+        assertEquals(employeeId, found.getId());
     }
 
     @Test
+//    @DataSet("empty.xml")
+//    @ExpectedDataSet("/expected-employees.xml")
+//    @Commit
     public void add() throws Exception {
         Employee employee = EmployeeBuilder.instance()
                 .withPhones(Arrays.asList(
@@ -62,7 +67,7 @@ public class EmployeeRepositoryTest {
     }
 
     @Test
-    public void save() throws Exception {
+    public void edit() throws Exception {
         Employee employee = EmployeeBuilder.instance()
                 .withPhones(Arrays.asList(
                         new Phone(7, "888", "00000001"),
@@ -70,18 +75,18 @@ public class EmployeeRepositoryTest {
                 .build();
         repository.save(employee);
 
-        Employee edit = repository.getOne(employee.getId());
+        Employee stored = repository.getOne(employee.getId());
 
-        edit.rename(new Name("New", "Test", "Name"));
-        edit.addPhone(new Phone(7, "888", "00000003"));
-        edit.archive(LocalDate.now());
-        repository.save(edit);
+        stored.rename(new Name("New", "Test", "Name"));
+        stored.addPhone(new Phone(7, "888", "00000003"));
+        stored.archive(LocalDate.now());
+        repository.save(stored);
 
         Employee found = repository.getOne(employee.getId());
         assertTrue(found.isArchived());
-        assertEquals(edit.getName(), found.getName());
-        assertThat(edit.getPhones(), containsInAnyOrder(found.getPhones().toArray()));
-        assertThat(edit.getStatus(), containsInAnyOrder(found.getStatus().toArray()));
+        assertEquals(stored.getName(), found.getName());
+        assertThat(stored.getPhones(), containsInAnyOrder(found.getPhones().toArray()));
+        assertThat(stored.getStatus(), containsInAnyOrder(found.getStatus().toArray()));
     }
 
     @Test
