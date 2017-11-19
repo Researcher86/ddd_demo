@@ -1,4 +1,4 @@
-package kz.tanat.web.integration.api;
+package kz.tanat.web.service;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,11 +23,11 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping("/api/employees")
 @Api(value = "employees", description = "Операции, относящиеся к сотрудникам")
-public class ApiEmployeeController {
+public class RestEmployeeController {
 
     private final EmployeeService employeeService;
 
-    public ApiEmployeeController(EmployeeService employeeService) {
+    public RestEmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
