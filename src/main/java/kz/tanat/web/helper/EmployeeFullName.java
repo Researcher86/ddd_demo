@@ -1,7 +1,7 @@
 package kz.tanat.web.helper;
 
 import kz.tanat.app.employee.dto.EmployeeDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 
 @Component
 @Scope("request")
+@AllArgsConstructor
 public class EmployeeFullName {
-    @Autowired
-    private HttpServletRequest httpServletRequest;
+    private final HttpServletRequest httpServletRequest;
 
     /**
      * You can call this method like {@code ${&#064;helper.something()}}.

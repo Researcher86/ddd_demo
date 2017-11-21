@@ -9,6 +9,7 @@ import kz.tanat.app.employee.dto.AddressDto;
 import kz.tanat.app.employee.dto.EmployeeDto;
 import kz.tanat.app.employee.dto.NameDto;
 import kz.tanat.app.employee.dto.PhoneDto;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,13 +24,10 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping("/api/employees")
 @Api(value = "employees", description = "Операции, относящиеся к сотрудникам")
+@AllArgsConstructor
 public class RestEmployeeController {
 
     private final EmployeeService employeeService;
-
-    public RestEmployeeController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
 
     @GetMapping
     @ApiOperation(value = "Просмотреть список сотрудников", response = Iterable.class)

@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -52,8 +53,8 @@ public class EmployeeControllerTest {
     static class Config {
 
         @Bean
-        public EmployeeFullName employeeFullName() {
-            return new EmployeeFullName();
+        public EmployeeFullName employeeFullName(HttpServletRequest httpServletRequest) {
+            return new EmployeeFullName(httpServletRequest);
         }
 
     }

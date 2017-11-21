@@ -7,6 +7,7 @@ import kz.tanat.app.employee.dto.PhoneDto;
 import kz.tanat.domain.employee.Employee;
 import kz.tanat.domain.employee.EmployeeId;
 import kz.tanat.domain.employee.EmployeeRepository;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +26,9 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @Transactional
+@AllArgsConstructor
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
-
-    public EmployeeService(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
-    }
 
     public EmployeeDto get(String employeeId) {
         Employee employee = getOne(employeeId);

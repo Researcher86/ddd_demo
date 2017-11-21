@@ -4,6 +4,7 @@ import kz.tanat.domain.DomainEvent;
 import kz.tanat.domain.DomainEventPublisher;
 import kz.tanat.domain.event.EventRepository;
 import kz.tanat.domain.event.StoredEvent;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -20,12 +21,9 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Aspect
 @Component
+@AllArgsConstructor
 public class DomainEventMonitor {
     private final EventRepository eventRepository;
-
-    public DomainEventMonitor(EventRepository eventRepository) {
-        this.eventRepository = eventRepository;
-    }
 
     @Around("execution(* kz.tanat.app..*Service.*(..))")
     public Object webServiceMethod(ProceedingJoinPoint joinPoint) throws Throwable {

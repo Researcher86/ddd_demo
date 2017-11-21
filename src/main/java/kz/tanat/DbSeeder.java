@@ -5,8 +5,7 @@ import kz.tanat.app.employee.dto.AddressDto;
 import kz.tanat.app.employee.dto.EmployeeDto;
 import kz.tanat.app.employee.dto.NameDto;
 import kz.tanat.app.employee.dto.PhoneDto;
-import kz.tanat.domain.employee.Address;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -21,9 +20,9 @@ import java.util.stream.Stream;
  * @since 12.08.2017.
  */
 @Component
+@AllArgsConstructor
 public class DbSeeder implements CommandLineRunner {
-    @Autowired
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
     @Override
     public void run(String... strings) throws Exception {
