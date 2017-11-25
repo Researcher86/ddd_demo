@@ -21,7 +21,7 @@ import java.util.stream.Stream;
  */
 @Component
 @AllArgsConstructor
-public class DbSeeder implements CommandLineRunner {
+public class DevBootstrap implements CommandLineRunner {
     private final EmployeeService employeeService;
 
     @Override
